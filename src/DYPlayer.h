@@ -22,19 +22,11 @@ typedef enum  {
 class DYPlayer {
   public:
   /**
-   * A virtual method that can be called on after construction of the object.
-   * You can use this to setup the serial port if required.
-   * This is left empty so it is always safe to call it regardless of the 
-   * platform.
-   */
-  virtual void begin(void* data);
-  
-  /**
    * Virtual method that should implement writing to the module via UART.
    * @param buffer of bytes to send to the module.
    * @param len of buffer.
    */
-  virtual void serialWrite(unsigned char buffer[], uint8_t len);
+  virtual void serialWrite(unsigned char buffer[], uint8_t len)=0;
   /** 
    * Map writing a single byte to the same method as writing a buffer of 
    * length 1.
@@ -50,7 +42,7 @@ class DYPlayer {
    * @param len of buffer.
    * @returns Successful read (true), failure (false).
    */
-  virtual bool serialRead(unsigned char buffer[], uint8_t len);
+  virtual bool serialRead(unsigned char buffer[], uint8_t len)=0;
   
   /**
    * Calculate the sum of all bytes in a buffer as a simple "CRC".

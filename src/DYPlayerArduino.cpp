@@ -1,19 +1,17 @@
 /* 
-    This code makes the library hardware independent, it should work on
-    Arduino, Espressif boards, ARM boards etc.
-
-    It is a hardware abstraction layer, it tells the library how to use the 
+    This is a hardware abstraction layer, it tells the library how to use the 
     serial port on an Arduino board (and which port).
 */
 #include "DYPlayerArduino.h"
-void Player::begin() {
+Player::Player() {
     this->port = &Serial;
+}
+Player::Player(HardwareSerial* port) {
+    this->port = port;
+}    
+void Player::begin() {
     port->begin(9600);
 }
-void Player::begin(void* data) {
-    this->port = (HardwareSerial*) data;
-    port->begin(9600);
-}    
 void Player::serialWrite(unsigned char buffer[], uint8_t len) {
     port->write(buffer, len);
 }

@@ -9,17 +9,10 @@
 
 #include "DYPlayer.h"
 
-void DYPlayer::serialWrite(unsigned char buffer[], uint8_t len) { 
-  /* do nothing */
-}
 void DYPlayer::serialWrite(uint8_t byte) {
   unsigned char buffer[1] = { byte };
   serialWrite(buffer, 1);
 }
-bool DYPlayer::serialRead(unsigned char buffer[], uint8_t len) {
-    /* only return false to indicate there was no read */
-    return false;
-  }
 
 uint8_t DYPlayer::checksum(unsigned char data[], uint8_t len) {
   uint8_t sum = 0;
