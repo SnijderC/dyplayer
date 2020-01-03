@@ -1,0 +1,17 @@
+{
+    "name": "DYPlayer",
+    "keywords": "MP3, player, DY-SV17F, DY-SV8F, DY-HV20T, DY-HV8F, DY-HV20T, UART",
+    "description": "Abstracton for DY-XXXX mp3 player modules over UART.",
+    "homepage": "https://github.com/SnijderC/DYPlayer",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/SnijderC/DYPlayer.git"
+    },
+    "version": "1.0.0",
+    "authors": {
+      "name": "Chris Snijder",
+      "url": "https://github.com/SnijderC"
+    },
+    "frameworks": "*",
+    "platforms": "*"
+  }
