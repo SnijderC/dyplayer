@@ -19,7 +19,7 @@ typedef enum  {
   LAST_SOUND
 } playDirSound_t;
 
-class AbstractPlayer {
+class DYPlayer {
   public:
   /**
    * A virtual method that can be called on after construction of the object.
@@ -231,7 +231,7 @@ class AbstractPlayer {
    * @param path of the file (asbsolute).
    * @param len of the path.
    */
-  void interludeSpecifiedDevicePath(uint8_t device, char path[], uint8_t len);
+  void interludeSpecifiedDevicePath(device_t device, unsigned char path[], uint8_t len);
 
 
   /**
