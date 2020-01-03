@@ -10,7 +10,7 @@ class, except:
   Note that "interlude" should work.
 
 This library also __does not support__ the `ONE_Line` protocol, 
-[more info](#one_line_support). 
+[more info](#one_line-support). 
 
 Although all features are implemented and should theoretically work, only 
 those in the examples directory are tested. Please create an issue if you have
@@ -23,7 +23,7 @@ boards, probably even any computer.
 ## HAL
 
 __Arduino tl;dr;__
-If you are using Arduino, skip this chapter and go to [Arduino][#arduino].
+If you are using Arduino, skip this chapter and go to [Arduino](#arduino).
 
 Because the library is hardware independent you might need to add a Hardware
 Abstraction Layer (HAL) which sets up the serial port and that implements a 
@@ -107,7 +107,7 @@ If you have a board with DIP switches, set `CON3` to on, `CON1` and `CON2`
 should remain off. If you have no DIP switches (e.g. `DY-SV17F` board), you have
 to connect 3 resistors, one from each `CON` pin, to:
 
-| CON pin    | Connect to |posi
+| CON pin    | Connect to |
 |:-----------|:-----------|
 | `CON1`     | `3.3V`     |
 | `CON2`     | `GND`      |
@@ -165,6 +165,6 @@ to implement it, we could discuss merging it with this library for convenience.
 - Check the speaker connection.
 - Test the speaker on another device and see if it is operational.
 - Use the `checkDevice()` function to see if the device is responsive.
-- See the [loading sound files](#loading_sound_files) chapter and apply the 
+- See the [loading sound files](#loading-sound-files) chapter and apply the 
   simplest file structure to see the wiring etc is correct before filing issues.
 
