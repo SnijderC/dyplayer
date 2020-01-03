@@ -84,7 +84,7 @@ function. The argument should be of type `void*` because the virtual function
 is hardware independent, it doesn't have the Arduino `HardwareSerial` type. So
 cast it to (e.g. `Player.begin((HardwareSerial*) Serial2)`).
 
-To use the Arduino HAL see [PlaySounds.ino](examples/PlaySounds/PlaySounds.ino).
+To use the Arduino HAL see [PlaySound.ino](examples/PlaySound/PlaySound.ino).
 
 ## Modules should work (not exhaustive)
 

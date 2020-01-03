@@ -1,19 +1,19 @@
 #include <Arduino.h>
 #include "DYPlayerArduino.h"
 
+// Initialise the player, it defaults to using Serial.
 Player player;
-// Or on another serial port.
+
+// Alternatively initialise on another serial port.
 // Player player(&Serial2);
+
 void setup() {
     player.begin();
     //player.setDevice(FLASH);
-    player.setVolume(5); // 50% Volume
-    player.getDevice();
+    player.setVolume(15); // 50% Volume
 }
 
 void loop() {
   player.playSpecified(1);
-  while (true) {
-    delay(5000);
-  }
+  delay(5000);
 }
