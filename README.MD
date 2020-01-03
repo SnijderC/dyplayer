@@ -32,11 +32,15 @@ Arduino example:
 
 ``` C++
 // player.hpp
-class Player: public    
+#include <Arduino.h>
+#include "DYPlayer.h"
+
 class Player: public DYPlayer {
     public:
         HardwareSerial *port;
-        void begin(void* data);
+        Player();
+        Player(HardwareSerial* port);
+        void begin();
         void serialWrite(unsigned char buffer[], uint8_t len);
         bool serialRead(unsigned char buffer[], uint8_t len);
 };
@@ -44,14 +48,16 @@ class Player: public DYPlayer {
 //player.cpp
 #include "player.hpp"
 
-void Player::begin() {
+#include "DYPlayerArduino.h"
+Player::Player() {
     this->port = &Serial;
+}
+Player::Player(HardwareSerial* port) {
+    this->port = port;
+}    
+void Player::begin() {
     port->begin(9600);
 }
-void Player::begin(void* data) {
-    this->port = (HardwareSerial*) data;
-    port->begin(9600);
-}    
 void Player::serialWrite(unsigned char buffer[], uint8_t len) {
     port->write(buffer, len);
 }
@@ -67,12 +73,12 @@ bool Player::serialRead(unsigned char buffer[], uint8_t len) {
 Steps: 
 
 1. Define a class that extends the `DYPlayer` class.
-2. Define functions for `serialWrite()` and `serialRead()` according to the 
+1. Define constructors that set up the serial port. On some platforms you will
+   need to setup your serial port after some other things are initialized, e.g.
+   on Arduino, then define an additional `Player::begin()` (or 
+   e.g. `Player::init()`) to finish initialisation.
+1. Define functions for `serialWrite()` and `serialRead()` according to the 
    board and the framework you use.
-
-You could have a global variable that holds a pointer to the serial port, if
-you don't you can add a new attribute to the class to hold it and set it up by
-defining a `begin()` function. See the Arduino example.
 
 ## Arduino
 
