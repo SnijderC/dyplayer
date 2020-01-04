@@ -7,12 +7,32 @@
  * serialWrite) and one that you may override (begin)
  */
 #include <stdint.h>
+
 typedef enum  {
   USB   = 0,
   SD    = 1,
   FLASH = 2,
   FAIL  = -1
 } device_t;
+
+typedef enum  {
+  EQ_NORMAL,
+  EQ_POP,
+  EQ_ROCK,
+  EQ_JAZZ,
+  EQ_CLASSIC
+} eq_t;
+
+typedef enum {
+  PLAY_MODE_REPEAT,       // Play all music in sequence, and repeat.
+  PLAY_MODE_REPEAT_ONE,   // Repeat current sound.
+  PLAY_MODE_ONE_OFF,      // Play sound file and stop.
+  PLAY_MODE_RANDOM,       // Play random sound file.
+  PLAY_MODE_REPEAT_DIR,   // Repeat current directory.
+  PLAY_MODE_RANDOM_DIR,   // Play random sound file in current folder.
+  PLAY_MODE_SEQUENCE_DIR, // Play all sound files in current folder in sequence, and stop.
+  PLAY_MODE_SEQUENCE      // Play all sound files on device in sequence, and stop.
+} play_mode_t;
 
 typedef enum  {
   FIRST_SOUND,
@@ -26,7 +46,7 @@ class DYPlayer {
    * @param buffer of bytes to send to the module.
    * @param len of buffer.
    */
-  virtual void serialWrite(unsigned char buffer[], uint8_t len)=0;
+  virtual void serialWrite(char buffer[], uint8_t len)=0;
   /** 
    * Map writing a single byte to the same method as writing a buffer of 
    * length 1.
@@ -42,7 +62,7 @@ class DYPlayer {
    * @param len of buffer.
    * @returns Successful read (true), failure (false).
    */
-  virtual bool serialRead(unsigned char buffer[], uint8_t len)=0;
+  virtual bool serialRead(char buffer[], uint8_t len)=0;
   
   /**
    * Calculate the sum of all bytes in a buffer as a simple "CRC".
@@ -50,7 +70,7 @@ class DYPlayer {
    * @param len of buffer.
    * @returns Checksum of the buffer.
    */
-  uint8_t checksum(unsigned char data[], uint8_t len);
+  uint8_t checksum(char data[], uint8_t len);
   
   /**
    * Validate data buffer with "CRC" byte (last byte should be the CRC byte).
@@ -58,14 +78,14 @@ class DYPlayer {
    * @param len of buffer.
    * @returns boolean indicating CRC is correct (true) or incorrect (false).
    */
-  bool validateCrc(unsigned char data[], uint8_t len);
-  
+  bool validateCrc(char data[], uint8_t len);
+
   /**
    * Send a command to the module, adds a CRC to the passed buffer.
    * @param buffer containing bytes to send to the module.
    * @param len of buffer.
    */
-  void sendCommand(unsigned char data[], uint8_t len);
+  void sendCommand(char data[], uint8_t len);
 
   /**
    * Get a response to a command.
@@ -74,7 +94,7 @@ class DYPlayer {
    * @param buffer buffer for the bytes to receive.
    * @param len of buffer.
    */
-  bool getResponse(unsigned char buffer[], uint8_t len);
+  bool getResponse(char buffer[], uint8_t len);
   
   /**
    * Send a command to the module, pass a static crc. 
@@ -83,7 +103,7 @@ class DYPlayer {
    * @param len of buffer.
    * @param crc Precalculated CRC byte.
    */
-  void sendCommand(unsigned char data[], uint8_t len, uint8_t crc);
+  void sendCommand(char data[], uint8_t len, uint8_t crc);
 
   /**
    * Check the current play state can be called at any time.
@@ -128,7 +148,7 @@ class DYPlayer {
    * @param path of the file (asbsolute).
    * @param len of the path.
    */
-  void playSpecifiedDevicePath(device_t device, unsigned char path[], uint8_t len);
+  void playSpecifiedDevicePath(device_t device, char path[], uint8_t len);
 
   /**
    * See if communication with the module is possible.
@@ -223,7 +243,7 @@ class DYPlayer {
    * @param path of the file (asbsolute).
    * @param len of the path.
    */
-  void interludeSpecifiedDevicePath(device_t device, unsigned char path[], uint8_t len);
+  void interludeSpecifiedDevicePath(device_t device, char path[], uint8_t len);
 
 
   /**
@@ -233,17 +253,17 @@ class DYPlayer {
 
   /**
    * Sets the cycle mode.
-   * - 0: Play all music in sequence.
-   * - 1: Repeat current sound.
-   * - 2: Play sound file and stop.
-   * - 3: Play random sound file.
-   * - 4: Repeat current directory.
-   * - 5: Play random sound file in current folder.
-   * - 6: Play all sound files in current folder in sequence, and stop.
-   * - 7: Play all sound files on device in sequence, and stop.
+   * - PLAY_MODE_REPEAT       Play all music in sequence, and repeat.
+   * - PLAY_MODE_REPEAT_ONE   Repeat current sound.
+   * - PLAY_MODE_ONE_OFF      Play sound file and stop.
+   * - PLAY_MODE_RANDOM       Play random sound file.
+   * - PLAY_MODE_REPEAT_DIR   Repeat current directory.
+   * - PLAY_MODE_RANDOM_DIR   Play random sound file in current folder.
+   * - PLAY_MODE_SEQUENCE_DIR Play all sound files in current folder in sequence, and stop.
+   * - PLAY_MODE_SEQUENCE     Play all sound files on device in sequence, and stop.
    * @param mode The cycle mode to set.
    */
-  void setCycleMode(uint8_t mode);
+  void setCycleMode(play_mode_t mode);
 
   /**
    * Set how many cycles to play when in cycle modes 0, 1 or 4 (repeat modes).
@@ -253,14 +273,14 @@ class DYPlayer {
 
   /**
    * Set the equalizer setting.
-   * 0: Normal
-   * 1: Pop
-   * 2: Rock
-   * 3: Jazz
-   * 4: Classic
+   * EQ_NORMAL
+   * EQ_POP
+   * EQ_ROCK
+   * EQ_JAZZ
+   * EQ_CLASSIC
    * @param eq The equalizer setting.
    */
-  void setEq(uint8_t eq);
+  void setEq(eq_t eq);
 
   /**
    * Select a sound file without playing it.
