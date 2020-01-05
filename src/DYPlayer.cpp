@@ -7,41 +7,40 @@
  * serialWrite) and one that you may override (begin)
  */
 
+#include <string.h>
 #include "DYPlayer.h"
+
 void DYPlayer::serialWrite(uint8_t byte) {
-  char buffer[1] = { byte };
+  uint8_t buffer[1] = { byte };
   serialWrite(buffer, 1);
 }
 
-uint8_t DYPlayer::checksum(char data[], uint8_t len) {
+template <typename T>
+uint8_t inline DYPlayer::checksum(T *data, uint8_t len) {
   uint8_t sum = 0;
-  for (uint8_t i=0; i<len;i++) {
+  for (uint8_t i=0; i < len; i++) {
     sum = sum + data[i];
   }
   return sum;
 }
 
-bool DYPlayer::validateCrc(char data[], uint8_t len) {
+bool inline DYPlayer::validateCrc(uint8_t *data, uint8_t len) {
   uint8_t crc = data[len - 1];
-  uint8_t _data[len - 1] = { 0x00 };
-  for (int i = 0; i < len - 1; i++) {
-    _data[i] = data[i];
-  }
-  return checksum(_data, len - 1) == crc;
+  return checksum(data, len - 1) == crc;
 }
 
-void DYPlayer::sendCommand(char data[], uint8_t len) {
+void DYPlayer::sendCommand(uint8_t *data, uint8_t len) {
   uint8_t crc = checksum(data, len);
   serialWrite(data, len);
   serialWrite(crc);
 }
 
-void DYPlayer::sendCommand(char data[], uint8_t len, uint8_t crc) {
+void DYPlayer::sendCommand(uint8_t *data, uint8_t len, uint8_t crc) {
   serialWrite(data, len);
   serialWrite(crc);
 }
 
-bool DYPlayer::getResponse(char buffer[], uint8_t len) {
+bool DYPlayer::getResponse(uint8_t *buffer, uint8_t len) {
   if (serialRead(buffer, len) > 0) {
     if (validateCrc(buffer, len)) {
       return true;
@@ -53,7 +52,7 @@ bool DYPlayer::getResponse(char buffer[], uint8_t len) {
 uint8_t DYPlayer::checkPlayState() {
   uint8_t command[3] = { 0xaa, 0x01, 0x00 };
   sendCommand(command, 3, 0xab);
-  char buffer[6];
+  uint8_t buffer[6];
   if(getResponse(buffer, 6))
     return buffer[3];
   return 0;
@@ -91,7 +90,8 @@ void DYPlayer::playSpecified(uint16_t number) {
   sendCommand(command, 5);
 }
 
-void DYPlayer::playSpecifiedDevicePath(device_t device, char path[], uint8_t len) {
+void DYPlayer::playSpecifiedDevicePath(device_t device, char *path) {
+  uint8_t len = strlen(path);
   uint8_t command[len + 4];
   command[0] = 0xaa;
   command[1] = 0x08;
@@ -110,7 +110,7 @@ bool DYPlayer::checkDeviceOnline() {
 device_t DYPlayer::getDevice() {
   uint8_t command[3] = { 0xaa, 0x09, 0x00 };
   sendCommand(command, 3, 0xb3);
-  char buffer[5];
+  uint8_t buffer[5];
   if(getResponse(buffer, 5))
     return (device_t)buffer[3];
   return FAIL;
@@ -125,7 +125,7 @@ void DYPlayer::setDevice(device_t device) {
 uint16_t DYPlayer::soundCount() {
   uint8_t command[3] = { 0xaa, 0x0c, 0x00 };
   sendCommand(command, 3, 0xb6);
-  char buffer[6];
+  uint8_t buffer[6];
   if (getResponse(buffer, 6))
     return (buffer[3] << 8) | buffer[4];
   return 0;
@@ -134,7 +134,7 @@ uint16_t DYPlayer::soundCount() {
 uint16_t DYPlayer::getPlayingSound() {
   uint8_t command[3] = { 0xaa, 0x0d, 0x00 };
   sendCommand(command, 3, 0xb7);
-  char buffer[6];
+  uint8_t buffer[6];
   if (getResponse(buffer, 6))
     return (buffer[3] << 8) | buffer[4];
   return 0;
@@ -153,7 +153,7 @@ void DYPlayer::previousDir (playDirSound_t song) {
 uint16_t DYPlayer::firstInDir() {
   uint8_t command[3] = { 0xaa, 0x11, 0x00 };
   sendCommand(command, 3, 0xbb);
-  char buffer[6];
+  uint8_t buffer[6];
   if (getResponse(buffer, 6))
     return (buffer[3] << 8) | buffer[4];
   return 0;
@@ -162,7 +162,7 @@ uint16_t DYPlayer::firstInDir() {
 uint16_t DYPlayer::soundCountDir() {
   uint8_t command[3] = { 0xaa, 0x12, 0x00 };
   sendCommand(command, 3, 0xbc);
-  char buffer[6];
+  uint8_t buffer[6];
   if (getResponse(buffer, 6))
     return (buffer[3] << 8) | buffer[4];
   return 0;
@@ -192,7 +192,8 @@ void DYPlayer::interludeSpecified(device_t device, uint16_t number) {
   sendCommand(command, 6);
 }
 
-void DYPlayer::interludeSpecifiedDevicePath(device_t device, char path[], uint8_t len) {
+void DYPlayer::interludeSpecifiedDevicePath(device_t device, char *path) {
+  uint8_t len = strlen(path);
   uint8_t command[len + 4];
   command[0] = 0xaa;
   command[1] = 0x17;

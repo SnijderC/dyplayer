@@ -7,6 +7,6 @@ class Player: public DYPlayer {
         Player();
         Player(HardwareSerial* port);
         void begin();
-        void serialWrite(char buffer[], uint8_t len);
-        bool serialRead(char buffer[], uint8_t len);
+        void serialWrite(uint8_t *buffer, uint8_t len);
+        bool serialRead(uint8_t *buffer, uint8_t len);
 };

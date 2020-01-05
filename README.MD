@@ -41,8 +41,8 @@ class Player: public DYPlayer {
         Player();
         Player(HardwareSerial* port);
         void begin();
-        void serialWrite(unsigned char buffer[], uint8_t len);
-        bool serialRead(unsigned char buffer[], uint8_t len);
+        void serialWrite(uint8_t *buffer, uint8_t len);
+        bool serialRead(uint8_t *buffer, uint8_t len);
 };
 
 //player.cpp
@@ -58,10 +58,10 @@ Player::Player(HardwareSerial* port) {
 void Player::begin() {
     port->begin(9600);
 }
-void Player::serialWrite(unsigned char buffer[], uint8_t len) {
+void Player::serialWrite(uint8_t *buffer, uint8_t len) {
     port->write(buffer, len);
 }
-bool Player::serialRead(unsigned char buffer[], uint8_t len) {
+bool Player::serialRead(uint8_t *buffer, uint8_t len) {
     // Serial.setTimeout(1000); // Default timeout 1000ms.
     if(port->readBytes(buffer, len) > 0) {
         return true;
