@@ -287,4 +287,14 @@ class DYPlayer {
      * @param len of buffer.
      */
     bool getResponse(uint8_t *buffer, uint8_t len);
+
+  /**
+   * Convert paths to the weird format required by the modules.
+   * - Any dot in a path should become a star (`*`)
+   * - Path ending slashes should be have a star prefix, except root.
+   * E.g.: /SONGS1/FILE1.MP3 should become: /SONGS1﹡/FILE1*MP3
+   * NOTE: This comment uses a unicode * look-a-alike (﹡) because ﹡/ end the
+   * comment.
+   */
+  void convertPath(char **path);
 };

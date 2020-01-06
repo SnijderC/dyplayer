@@ -49,6 +49,35 @@ bool DYPlayer::getResponse(uint8_t *buffer, uint8_t len) {
   return false;
 }
 
+void DYPlayer::convertPath(char **path) {
+  uint8_t len = strlen(*path);
+  if (len < 1) return;
+  uint8_t _len = len;
+  // Count / in path and, except root slash and determine new length 
+  for (uint8_t i = 1; i < len; i++) {
+    if ((*path)[i] == '/')
+      _len++;
+  }
+  char *_path = new char [_len];
+  _path[0] = (*path)[0];
+  uint8_t j = 1;
+  for (uint8_t i = 1; i < len; i++) {
+    switch((*path)[i]) {
+      case '.':
+        _path[j] = '*';
+        break;
+      case '/':
+        _path[j] = '*';
+        j++;
+        // fall-through
+      default:
+        _path[j] = (*path)[i];
+    }
+    j++;
+  }
+  *path = _path;
+}
+
 uint8_t DYPlayer::checkPlayState() {
   uint8_t command[3] = { 0xaa, 0x01, 0x00 };
   sendCommand(command, 3, 0xab);
@@ -91,6 +120,7 @@ void DYPlayer::playSpecified(uint16_t number) {
 }
 
 void DYPlayer::playSpecifiedDevicePath(device_t device, char *path) {
+  convertPath(&path);
   uint8_t len = strlen(path);
   uint8_t command[len + 4];
   command[0] = 0xaa;
@@ -193,6 +223,7 @@ void DYPlayer::interludeSpecified(device_t device, uint16_t number) {
 }
 
 void DYPlayer::interludeSpecifiedDevicePath(device_t device, char *path) {
+  convertPath(&path);
   uint8_t len = strlen(path);
   uint8_t command[len + 4];
   command[0] = 0xaa;
