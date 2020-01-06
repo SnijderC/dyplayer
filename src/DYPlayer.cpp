@@ -49,33 +49,45 @@ bool DYPlayer::getResponse(uint8_t *buffer, uint8_t len) {
   return false;
 }
 
-void DYPlayer::convertPath(char **path) {
-  uint8_t len = strlen(*path);
+void DYPlayer::byPathCommand(uint8_t command, device_t device, char *path) {
+  uint8_t len = strlen(path);
   if (len < 1) return;
   uint8_t _len = len;
   // Count / in path and, except root slash and determine new length 
   for (uint8_t i = 1; i < len; i++) {
-    if ((*path)[i] == '/')
+    if (path[i] == '/')
       _len++;
   }
-  char *_path = new char [_len];
-  _path[0] = (*path)[0];
-  uint8_t j = 1;
+  #ifdef DY_PATHS_IN_HEAP
+  uint8_t *_command = new uint8_t[_len + 4];
+  #else
+  uint8_t _command[DY_PATH_LEN+4];
+  #endif
+
+  _command[0] = 0xaa;
+  _command[1] = command;
+  _command[2] = _len + 1;
+  _command[3] = device;
+  _command[4] = path[0];
+  uint8_t j = 5;
   for (uint8_t i = 1; i < len; i++) {
-    switch((*path)[i]) {
+    switch(path[i]) {
       case '.':
-        _path[j] = '*';
+        _command[j] = '*';
         break;
       case '/':
-        _path[j] = '*';
+        _command[j] = '*';
         j++;
         // fall-through
       default:
-        _path[j] = (*path)[i];
+        _command[j] = path[i];
     }
     j++;
   }
-  *path = _path;
+  sendCommand(_command, len + 4);
+  #ifdef DY_PATHS_IN_HEAP
+  delete[] _command;
+  #endif
 }
 
 uint8_t DYPlayer::checkPlayState() {
@@ -118,19 +130,8 @@ void DYPlayer::playSpecified(uint16_t number) {
   command[4] = number & 0xff;
   sendCommand(command, 5);
 }
-
 void DYPlayer::playSpecifiedDevicePath(device_t device, char *path) {
-  convertPath(&path);
-  uint8_t len = strlen(path);
-  uint8_t command[len + 4];
-  command[0] = 0xaa;
-  command[1] = 0x08;
-  command[2] = len + 1;
-  command[3] = device;
-  for (uint8_t i = 0; i < len; i++) {
-    command[i+4] = path[i];
-  }
-  sendCommand(command, len + 4);
+  byPathCommand(0x08, device, path);
 }
 
 bool DYPlayer::checkDeviceOnline() {
@@ -223,17 +224,7 @@ void DYPlayer::interludeSpecified(device_t device, uint16_t number) {
 }
 
 void DYPlayer::interludeSpecifiedDevicePath(device_t device, char *path) {
-  convertPath(&path);
-  uint8_t len = strlen(path);
-  uint8_t command[len + 4];
-  command[0] = 0xaa;
-  command[1] = 0x17;
-  command[2] = len + 1;
-  command[3] = device;
-  for (uint8_t i = 0; i < len; i++) {
-    command[i+4] = path[i];
-  }
-  sendCommand(command, len + 4);
+  byPathCommand(0x17, device, path);
 }
 
 void DYPlayer::stopInterlude() {

@@ -8,6 +8,10 @@
  */
 #include <stdint.h>
 
+#ifndef DY_PATHS_IN_HEAP
+#define DY_PATH_LEN 40
+#endif
+
 typedef enum  {
   USB   = 0,
   SD    = 1,
@@ -103,6 +107,11 @@ class DYPlayer {
 
     /**
      * Play a sound file by device and path.
+     * Path may consist of up to 2 nested directories of 8 bytes long and a
+     * file name of 8 bytes long excluding the extension of 4 bytes long.
+     * If your directory names are shorter you can use more nesting. Use no more
+     * than 36 bytes for your paths. If you require more, check the readme,
+     * chapter: Memory use.
      * @param device number USB, SD, FLASH
      * @param path of the file (asbsolute).
      */
@@ -197,7 +206,13 @@ class DYPlayer {
      * interlude will cover the previous interlude (the interlude will be 
      * played immediately). When the interlude is finished, it will return to
      * the first interlude breakpoint and continue to play.
-     * @param device number USB:0, SD:1, FLASH:2
+     * 
+     * Path may consist of up to 2 nested directories of 8 bytes long and a
+     * file name of 8 bytes long excluding the extension of 4 bytes long.
+     * If your directory names are shorter you can use more nesting. Use no more
+     * than 36 bytes for your paths. If you require more, check the readme,
+     * chapter: Memory use.
+     * @param device number USB, SD, FLASH
      * @param path of the file (asbsolute).
      */
     void interludeSpecifiedDevicePath(device_t device, char *path);
@@ -258,7 +273,7 @@ class DYPlayer {
     /**
      * Validate data buffer with "CRC" byte (last byte should be the CRC byte).
      * @param buffer containing bytes to calculate the CRC for.
-     * @param len of buffer.
+     * @param len of data.
      * @returns boolean indicating CRC is correct (true) or incorrect (false).
      */
     bool validateCrc(uint8_t *data, uint8_t len);
@@ -266,7 +281,7 @@ class DYPlayer {
     /**
      * Send a command to the module, adds a CRC to the passed buffer.
      * @param buffer containing bytes to send to the module.
-     * @param len of buffer.
+     * @param len of data.
      */
     void sendCommand(uint8_t *data, uint8_t len);
 
@@ -274,7 +289,7 @@ class DYPlayer {
      * Send a command to the module, pass a static crc. 
      * Use this to optimize speed for static commands.
      * @param buffer containing bytes to send to the module.
-     * @param len of buffer.
+     * @param len of data.
      * @param crc Precalculated CRC byte.
      */
     void sendCommand(uint8_t *data, uint8_t len, uint8_t crc);
@@ -289,12 +304,12 @@ class DYPlayer {
     bool getResponse(uint8_t *buffer, uint8_t len);
 
   /**
-   * Convert paths to the weird format required by the modules.
+   * Send command with converted paths to  weird format required by the modules.
    * - Any dot in a path should become a star (`*`)
    * - Path ending slashes should be have a star prefix, except root.
    * E.g.: /SONGS1/FILE1.MP3 should become: /SONGS1﹡/FILE1*MP3
    * NOTE: This comment uses a unicode * look-a-alike (﹡) because ﹡/ end the
    * comment.
    */
-  void convertPath(char **path);
+  void byPathCommand(uint8_t command, device_t device, char *path);
 };

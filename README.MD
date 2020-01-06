@@ -20,6 +20,48 @@ This library was written in a hardware independent way. Which means it should
 work on any device with a serial port, e.g. any Arduino, Espressif, ARM based 
 boards, probably even any computer. 
 
+## Modules should work (not exhaustive)
+
+| Model name | Capacity | SD Card support | Amplifier       | Voltage | Tested |
+|:-----------|:---------|:---------------:|:----------------|:-------:|:------:|
+| DY-SV17F   | 32Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | Yes    |
+| DY-SV8F    | 64Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
+| DY-HV20T   | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
+| DY-HV8F    | 8Mbit    | No              | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
+| DY-HV20T   | NA       | Yes, Max. 32GB  | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
+
+NOTE: I cannot guarantee that your board will work with the library. Nor that
+a specific feature will work. I only have the `DY-SV17F` in my possession to
+test at the time of writing. If something does not work, make an issue and/or
+send me a pull request. 
+
+## Wiring the module
+
+If you have a board with DIP switches, set `CON3` to on, `CON1` and `CON2`
+should remain off. If you have no DIP switches (e.g. `DY-SV17F` board), you have
+to connect 3 resistors, one from each `CON` pin, to:
+
+| CON pin    | Connect to |
+|:-----------|:-----------|
+| `CON1`     | `3.3V`     |
+| `CON2`     | `GND`      |
+| `CON3`     | `GND`      |
+
+The 3.3V pin is exposed by the board so you don't need to provide it.
+
+Further make these connections:
+
+| Pin      | Connect to                       |
+|:---------|:---------------------------------|
+| `V?`     | `V+` (voltage depends on module) |
+| `GND`    | `GND`                            |
+| `IO0/TX` | `MCU RX`                         |
+| `IO1/RX` | `MCU TX`                         |
+| `SPK+`   | Speaker positive lead            |
+| `SPK-`   | Speaker negative lead            |
+
+`MCU` should be your board or microprocessor, e.g. an Arduino board.
+
 ## HAL
 
 __Arduino tl;dr;__
@@ -80,6 +122,84 @@ Steps:
 1. Define functions for `serialWrite()` and `serialRead()` according to the 
    board and the framework you use.
 
+## Memory use
+
+This library uses a little memory as possible to play nice with micro 
+controllers with small RAM, such as Atmega238 (used in many Arduino boards),
+which has 2K RAM.
+
+To keep memory usage low, avoid using the functions that take `char *path`
+arguments. If you do not intend to play songs by file name, you can skip the 
+rest of this chapter. If you do, keep reading.
+
+The `char *path` arguments will always use more RAM than the `uint16_t` 
+arguments, obviously but this is compounded by an odd requirement of the player
+modules. I.e. the paths to files on flash/SD card have to be defined different
+than usual, e.g. 
+`/SONGS/IN/A/PATH/00001.MP3` should be specified as: 
+`/SONGS*/IN*/A*/PATH*/00001*MP3`
+
+Analysing this:
+
+- Paths normally end in `/` but an additional `*` is required;
+- except for the root level.
+- Period in before the extension should be replaced by `*` as well.
+- The new path is 4 bytes longer than the specified path.
+
+The conversion is done by the library but this means that the path is allocated
+twice in memory, once by you, once by the library and the latter needs to have
+more capacity (in this case 4 bytes). The libray can keep the second string's
+memory in 2 ways: in heap or in stack memory. 
+
+Stack memory is not dynamic, i.e.: the required amount of bytes should be known
+at compile time, which means more than the expected amount of bytes should
+already be reserved, which is wasteful. Aside from being wastelful, the path
+could be really short (most likely, e.g. `/00001.MP3` or something like
+`/SFX/00001.MP3`), or it could be really long..
+
+Putting the path in dynamically assigned heap memory fixes all of that, the 
+library can count the amount of `/` in the path and make a variable exactly 
+long enough for the converted path. However we should always be wary of 
+[Heap fragmentation](https://cpp4arduino.com/2018/11/06/what-is-heap-fragmentation.html).
+In short to assign memory a contgious block of it needs to be available. 
+Assiging chunks of memory and then freeing them leaves holes in the memory that
+may be be too small to use again later. This will gradually lead to problems.
+You may need to reset your device after several minutes, hours or days because
+the program can't allocate heap memory any more.
+
+So, by default the library will reserve stack memory. The amount is based on 
+some assumptions:
+
+- The manual of the sound modules states that paths and file names may be up to
+  8 characters long.
+- The library assumes that you will not nest more than 2 directories.
+- Extentions can be `.MP3` or `.WAV`, so always 4 bytes.
+
+So we come to:
+
+```
+/ dir */ dir */ file * ext
+
+1 + 8 + 2 + 8 + 2 + 8 + 1 + 4 = 34
+```
+
+Let's round that up to `40` and you could even have some more nesting as long as
+the directory names are small enough.
+
+The library will therefore define `DY_PATH_LEN` as `40`, you can override that 
+if you need more, or if you want to save a few bytes of precious memory. Note 
+that `40` is the maximum length of the path __after conversion__ to the funcky 
+format required by the module. The amount of bytes you may use with this default
+is set at `36`.
+
+Alternatively, if you have a more capable device and/or you can use virtual 
+memory, you can define `DY_PATHS_IN_HEAP` to use heap memory instead of reserved
+stack memory. 
+
+NOTE: On Arduino, you can wrap your strings in `F()` to tell the compiler you
+want the string stored in flash, as opposed to RAM (default), which will save
+you even more RAM.
+
 ## Arduino
 
 Because this is included, on Arduino you can just include the
@@ -91,48 +211,6 @@ is hardware independent, it doesn't have the Arduino `HardwareSerial` type. So
 cast it to (e.g. `Player.begin((HardwareSerial*) Serial2)`).
 
 To use the Arduino HAL see [PlaySound.ino](examples/PlaySound/PlaySound.ino).
-
-## Modules should work (not exhaustive)
-
-| Model name | Capacity | SD Card support | Amplifier       | Voltage | Tested |
-|:-----------|:---------|:---------------:|:----------------|:-------:|:------:|
-| DY-SV17F   | 32Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | Yes    |
-| DY-SV8F    | 64Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
-| DY-HV20T   | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
-| DY-HV8F    | 8Mbit    | No              | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
-| DY-HV20T   | NA       | Yes, Max. 32GB  | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
-
-NOTE: I cannot guarantee that your board will work with the library. Nor that
-a specific feature will work. I only have the `DY-SV17F` in my possession to
-test at the time of writing. If something does not work, make an issue and/or
-send me a pull request. 
-
-## Wiring the module
-
-If you have a board with DIP switches, set `CON3` to on, `CON1` and `CON2`
-should remain off. If you have no DIP switches (e.g. `DY-SV17F` board), you have
-to connect 3 resistors, one from each `CON` pin, to:
-
-| CON pin    | Connect to |
-|:-----------|:-----------|
-| `CON1`     | `3.3V`     |
-| `CON2`     | `GND`      |
-| `CON3`     | `GND`      |
-
-The 3.3V pin is exposed by the board so you don't need to provide it.
-
-Further make these connections:
-
-| Pin      | Connect to                       |
-|:---------|:---------------------------------|
-| `V?`     | `V+` (voltage depends on module) |
-| `GND`    | `GND`                            |
-| `IO0/TX` | `MCU RX`                         |
-| `IO1/RX` | `MCU TX`                         |
-| `SPK+`   | Speaker positive lead            |
-| `SPK-`   | Speaker negative lead            |
-
-`MCU` should be your board or microprocessor, e.g. an Arduino board.
 
 ## Loading sound files
 
