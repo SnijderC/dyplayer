@@ -129,7 +129,7 @@ controllers with small RAM, such as Atmega238 (used in many Arduino boards),
 which has 2K RAM.
 
 To keep memory usage low, avoid using the functions that take `char *path`
-arguments. If you do not intend to play songs by file name, you can skip the 
+arguments. If you do not intend to play sounds by file name, you can skip the 
 rest of this chapter. If you do, keep reading.
 
 The `char *path` arguments will always use more RAM than the `uint16_t` 
@@ -161,8 +161,8 @@ Putting the path in dynamically assigned heap memory fixes all of that, the
 library can count the amount of `/` in the path and make a variable exactly 
 long enough for the converted path. However we should always be wary of 
 [Heap fragmentation](https://cpp4arduino.com/2018/11/06/what-is-heap-fragmentation.html).
-In short to assign memory a contgious block of it needs to be available. 
-Assiging chunks of memory and then freeing them leaves holes in the memory that
+In short to assign memory, a contgious block of it needs to be available. 
+Assigning chunks of memory and then freeing them leaves holes in the memory that
 may be be too small to use again later. This will gradually lead to problems.
 You may need to reset your device after several minutes, hours or days because
 the program can't allocate heap memory any more.
@@ -205,12 +205,14 @@ you even more RAM.
 Because this is included, on Arduino you can just include the
 `DYPlayerArduino.h` header file and use the module.
 
-You may use any Serial port on the board, you will have to pass it to the begin
-function. The argument should be of type `void*` because the virtual function
-is hardware independent, it doesn't have the Arduino `HardwareSerial` type. So
-cast it to (e.g. `Player.begin((HardwareSerial*) Serial2)`).
+You may use any Serial port on the board, you will have to pass it to the 
+`begin()` function. Like this:
 
-To use the Arduino HAL see [PlaySound.ino](examples/PlaySound/PlaySound.ino).
+```c++
+Player player(&Serial2);
+```
+
+To use the Arduino HAL see [PlaySound.ino](examples/PlaySounds/PlaySounds.ino).
 
 ## Loading sound files
 
