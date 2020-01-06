@@ -212,7 +212,8 @@ You may use any Serial port on the board, you will have to pass it to the
 Player player(&Serial2);
 ```
 
-To use the Arduino HAL see [PlaySounds.ino](examples/PlaySounds/PlaySounds.ino).
+To use the Arduino HAL see 
+[PlaySoundByNumber.ino](examples/PlaySoundByNumber/PlaySoundByNumber.ino).
 
 ## Loading sound files
 
