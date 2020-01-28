@@ -5,7 +5,8 @@
   "homepage": "https://github.com/SnijderC/dyplayer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SnijderC/dyplayer.git"
+    "url": "https://github.com/SnijderC/dyplayer.git",
+    "branch": "release"
   },
   "version": "1.0.5",
   "authors": {
