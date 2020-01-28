@@ -8,10 +8,10 @@ DY::Player player;
 // Player player(&Serial2);
 
 void setup() {
-    player.begin();
-    player.setVolume(15); // 50% Volume
-    player.setCycleMode(PLAY_MODE_RANDOM); // Play all randomly and repeat.
-    player.play();
+  player.begin();
+  player.setVolume(15); // 50% Volume
+  player.setCycleMode(PLAY_MODE_RANDOM); // Play all randomly and repeat.
+  player.play();
 }
 
 void loop() {

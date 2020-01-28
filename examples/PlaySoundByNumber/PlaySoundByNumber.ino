@@ -8,8 +8,8 @@ DY::Player player;
 // Player player(&Serial2);
 
 void setup() {
-    player.begin();
-    player.setVolume(15); // 50% Volume
+  player.begin();
+  player.setVolume(15); // 50% Volume
 }
 
 void loop() {
