@@ -2,7 +2,7 @@
 #include "DYPlayerArduino.h"
 
 // Initialise the player, it defaults to using Serial.
-Player player;
+DY::Player player;
 
 // Alternatively initialise on another serial port.
 // Player player(&Serial2);
