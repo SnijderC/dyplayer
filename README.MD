@@ -1,3 +1,11 @@
+# Release branch
+
+Always reference the
+[README.MD](https://github.com/SnijderC/dyplayer/blob/release/README.MD) in the
+[`release`](https://github.com/SnijderC/dyplayer/tree/release) branch as a
+source of documentation if you download the library through
+[platform.io](https://platformio.org)
+
 # Abstracted UART Control of DY-XXXX mp3 modules
 
 This library abstracts almost all features described in the manual into a C++
