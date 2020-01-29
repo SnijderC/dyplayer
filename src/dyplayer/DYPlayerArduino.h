@@ -1,3 +1,4 @@
+#ifdef ARDUINO
 #include <Arduino.h>
 #include "DYPlayer.h"
 namespace DY {
@@ -11,3 +12,4 @@ namespace DY {
       bool serialRead(uint8_t *buffer, uint8_t len);
   };
 }
+#endif
