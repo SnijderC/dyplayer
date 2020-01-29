@@ -17,6 +17,6 @@ void loop() {
   // For some reason periods need to be stars for this module.
   // Future releases will do this automatically.
   char path[] = "/00001.MP3";
-  player.playSpecifiedDevicePath(FLASH, path);
+  player.playSpecifiedDevicePath(DY::FLASH, path);
   delay(5000);
 }
