@@ -2,6 +2,7 @@
   This is a hardware abstraction layer, it tells the library how to use the
   serial port on an Arduino board (and which port).
 */
+#ifdef ARDUINO
 #include "DYPlayerArduino.h"
 
 namespace DY {
@@ -25,3 +26,4 @@ namespace DY {
     return false;
   }
 }
+#endif
