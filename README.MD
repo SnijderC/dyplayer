@@ -51,13 +51,13 @@ send me a pull request.
 
 If you have a board with DIP switches, set `CON3` to on, `CON1` and `CON2`
 should remain off. If you have no DIP switches (e.g. `DY-SV17F` board), you have
-to connect 3 resistors, one from each `CON` pin, to:
+to connect 3 resistors of `10KOhm`, one from each `CON#` pin, to:
 
-| CON pin    | Connect to |
-|:-----------|:-----------|
-| `CON1`     | `3.3V`     |
-| `CON2`     | `GND`      |
-| `CON3`     | `GND`      |
+| CON pin    | Connect to | Via      |
+|:-----------|:-----------|:---------|
+| `CON1`     | `GND`      | `10KOhm` |
+| `CON2`     | `GND`      | `10KOhm` |
+| `CON3`     | `3.3V`     | `10KOhm` |
 
 The 3.3V pin is exposed by the board so you don't need to provide it.
 
