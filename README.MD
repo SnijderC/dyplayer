@@ -28,6 +28,10 @@ This library was written in a hardware independent way. Which means it should
 work on any device with a serial port, e.g. any Arduino, Espressif, ARM based
 boards, probably even any computer.
 
+There are Hardware Abstraction Layers (HAL) included for [Arduino](#arduino)
+and [ESP-IDF](#esp-idf), for other boards you will have to
+[provide one yourself](#hal) (PR is welcome!).
+
 ## Modules should work (not exhaustive)
 
 | Model name | Capacity | SD Card support | Amplifier       | Voltage | Tested |
@@ -74,6 +78,9 @@ Further make these connections:
 
 __Arduino tl;dr;__
 If you are using Arduino, skip this chapter and go to [Arduino](#arduino).
+
+__ESP32 tl;dr;__
+If you are using ESP-IDF, skip this chapter and go to [ESP-IDF](#esp-idf).
 
 Because the library is hardware independent you might need to add a Hardware
 Abstraction Layer (HAL) which sets up the serial port and that implements a
@@ -227,6 +234,21 @@ DY::Player player(&Serial2);
 
 To use the Arduino HAL see
 [PlaySoundByNumber.ino](examples/PlaySoundByNumber/PlaySoundByNumber.ino).
+
+## ESP-IDF
+
+Because this is included, on Arduino you can just include the
+`DYPlayerESP32.h` header file and use the module.
+
+You may use any Serial port on the board, and any 2 pins for TX and RX.
+E.g.: user `UART_NUM_2` on pins TX: 18, RX: 19:
+
+```c++
+DY::Player player(UART_NUM_2, 18, 19);
+```
+
+You can find an example here:
+[PlaySounds.cpp](examples/esp32/PlaySounds.cpp).
 
 ## Loading sound files
 
