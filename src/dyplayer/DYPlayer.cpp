@@ -239,9 +239,10 @@ namespace DY {
     sendCommand(command, 4);
   }
   void DYPlayer::setCycleTimes(uint16_t cycles) {
-    uint8_t command[4] = { 0xaa, 0x19, 0x01, 0x00 };
-    command[3] = cycles;
-    sendCommand(command, 4);
+    uint8_t command[5] = { 0xaa, 0x19, 0x02, 0x00, 0x00 };
+    command[3] = cycles >> 8;
+    command[4] = cycles & 0xff;
+    sendCommand(command, 5);
   }
 
   void DYPlayer::setEq(eq_t eq) {
@@ -251,7 +252,7 @@ namespace DY {
   }
 
   void DYPlayer::select(uint16_t number) {
-    uint8_t command[5] = { 0xaa, 0x1f, 0x2, 0x00, 0x00};
+    uint8_t command[5] = { 0xaa, 0x1f, 0x02, 0x00, 0x00};
     command[3] = number >> 8;
     command[4] = number & 0xff;
     sendCommand(command, 5);
