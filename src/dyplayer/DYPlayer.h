@@ -111,7 +111,7 @@ namespace DY {
 
       /**
        * Check the current play state can, be called at any time.
-       * @return Play status: A [DY::PlayState](#typedef-enum-classdyplaymode_t),
+       * @return Play status: A [DY::PlayState](#typedef-enum-classdyplaymodeplaymode_t),
        *         e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc.
        */
       play_state_t checkPlayState();
@@ -154,7 +154,7 @@ namespace DY {
        * If your directory names are shorter you can use more nesting. Use no
        * more than 36 bytes for your paths. If you require more, check the
        * readme, chapter: Memory use.
-       * @param device A [DY::Device member](#typedef-enum-classdydevice_t),
+       * @param device A [DY::Device member](#typedef-enum-classdydevicedevice_t),
        *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
        * @param path pointer to the path of the file (asbsolute).
        */
@@ -162,7 +162,7 @@ namespace DY {
 
       /**
        * Get the device number the module is currently using.
-       * @return device A [`DY::Device member`](#typedef-enum-classdydevice_t),
+       * @return device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t),
        *                e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`.
        */
       device_t getDeviceOnline();
@@ -170,7 +170,7 @@ namespace DY {
       /**
        * Get the storage device that is currently used for playing sound files.
        *
-       * @return device A [`DY::Device member`](#typedef-enum-classdydevice_t),
+       * @return device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t),
        *                e.g  `DY::Device::FLASH`.
        */
       device_t getPlayingDevice();
@@ -179,7 +179,7 @@ namespace DY {
        * Set the device number the module should use.
        * Tries to set the device but no guarantee is given, use `getDevice()`
        * to check the actual current storage device.
-       * @param device A [DY::Device member](#typedef-enum-classdydevice_t),
+       * @param device A [DY::Device member](#typedef-enum-classdydevicedevice_t),
        *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
        */
       void setPlayingDevice(device_t device);
@@ -243,7 +243,7 @@ namespace DY {
        * interlude will cover the previous interlude (the interlude will be
        * played immediately). When the interlude is finished, it will return to
        * the first interlude breakpoint and continue to play.
-       * @param device A [DY::Device member](#typedef-enum-classdydevice_t),
+       * @param device A [DY::Device member](#typedef-enum-classdydevicedevice_t),
        *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
        * @param number of the file, e.g. `1` for `00001.mp3`.
        */
@@ -261,7 +261,7 @@ namespace DY {
        * If your directory names are shorter you can use more nesting. Use no
        * more than 36 bytes for your paths. If you require more, check the
        * readme, chapter: Memory use.
-       * @param device A [DY::Device member](#typedef-enum-classdydevice_t),
+       * @param device A [DY::Device member](#typedef-enum-classdydevicedevice_t),
        *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
        * @param path pointer to the path of the file (asbsolute).
        */
@@ -356,7 +356,7 @@ namespace DY {
      * NOTE: This comment uses a unicode * look-a-alike (﹡) because ﹡/ end the
      * comment.
      * @param command The command to send.
-     * @param device A [DY::Device member](#typedef-enum-classdydevice_t),
+     * @param device A [DY::Device member](#typedef-enum-classdydevicedevice_t),
      *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
      * @param path of the file (asbsolute).
      */
