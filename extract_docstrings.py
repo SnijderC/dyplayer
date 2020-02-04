@@ -35,9 +35,9 @@ RE_CLEAN_DESCRIPTION = re.compile('^\s*\* *', re.MULTILINE)
 #: Find an entire definition of a return, param or throw up to the end of it.
 RE_DEFINITION = re.compile((
         '@(?P<definition>return|param|throw)\s+'
-        '(?P<description>(?P<name>[a-zA-Z0-9-_]+)(?P<rest>.*))'
+        '(?P<description>(?P<name>[a-zA-Z0-9-_]+)(?P<rest>[^@]+))'
     ),
-    re.MULTILINE
+    re.MULTILINE + re.DOTALL
 )
 
 #: Filter out those definitions from the rest of the description
@@ -89,7 +89,11 @@ def parse_enums(source):
             enum_list.append({
                 'description': description,
                 'value': value,
-                'const': definition.group('const')
+                'const': "%(ns)s::%(class)s::%(const)s" % {
+                    'ns': NAMESPACE,
+                    'class': classname,
+                    'const': definition.group('const')
+                }
             })
 
         if any([e['description'] for e in enum_list]):
@@ -104,25 +108,25 @@ def parse_enums(source):
         for definition in enum_list:
             body += enum_fmt % definition
 
-        if classname:
-            heading_fmt = "%(hl)s typedef enum class`%(ns)s::%(class)s::%(enum)s`"
-        else:
-            heading_fmt = "%(hl)s typedef enum `%(ns)s::%(enum)s`"
+        heading_fmt = "%(hlevel)s typedef enum class %(namespace)s::%(enum)s"
+        anchor_title_fmt = "[%(namespace)s::%(enum)s]"
 
-        heading = heading_fmt % {
-            'hl': HEADING_LEVEL * "#",
-            'ns': NAMESPACE,
-            'enum': enum_t,
-            'class': classname
+        if classname:
+            anchor_link_fmt = "(#typedef-enum-class-%(namespace)s%(enum)s)"
+        else:
+            anchor_link_fmt = "(#typedef-enum-%(namespace)s%(enum)s)"
+
+        enum_data = {
+            'hlevel': HEADING_LEVEL * "#",
+            'namespace': NAMESPACE,
+            'enum': enum_t
         }
 
+        heading = heading_fmt % enum_data
         # The anchor github will also generate to link to this enum. E.g.:
         # https://github.com/SnijderC/dyplayer#typedef-enum-dydevicedevice_t
-        slug = re.sub("[#:`]", "", heading).lower().strip().replace(" ", "-")
-        anchor = "[%s](#%s)" % (
-            re.sub("^#+\s", "", heading),
-            slug
-        )
+        anchor = anchor_title_fmt % enum_data
+        anchor += (anchor_link_fmt % enum_data).lower().replace(":", "")
 
         if extends:
             body += "\nThis enum class is based off %s.\n" % extends
@@ -200,11 +204,11 @@ def print_class_methods(source, enums):
         # Iterate over all definitions of param, return and throw.
         for definition in RE_DEFINITION.finditer(docstring):
             # Are we dealing with a param, return or throw?
-            deftype = definition.group('definition')
+            def_type = definition.group('definition')
             # The description of the definition is always in the same place
-            description = definition.group("description")
+            def_desc = definition.group("description")
 
-            if deftype == "param":
+            if def_type == "param":
                 # Find the corresponding type for the argument name (first word
                 # in the description of the definition).
                 param_type = args[definition.group("name")]
@@ -213,19 +217,19 @@ def print_class_methods(source, enums):
                     param_type = enum_type["anchor"]
                 else:
                     param_type = "`%s`" % param_type
-            elif deftype == "return":
+            elif def_type == "return":
                 # We already parsed the return type.
                 param_type = return_type
-            elif deftype == "throw":
+            elif def_type == "throw":
                 # throws always start with the exception name as the first word.
                 param_type = definition.group("name")
                 # Remove the first word (definition type) from the description.
-                desc = re.sub("^%s " % deftype, "", definition.group("rest"))
+                desc = re.sub("^%s " % def_type, "", definition.group("rest"))
 
             table += re.sub(
                 "[^|]\n",
                 " ",
-                "| __%s__ | %s | %s |\n" % (deftype, param_type, description)
+                "| __%s__ | %s | %s |\n" % (def_type, param_type, def_desc)
             )
         # Output heading, description and definition table.
         print("%s\n\n%s\n\n%s\n" % (heading, description, table))

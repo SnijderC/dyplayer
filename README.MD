@@ -272,41 +272,38 @@ you can change are applied by "set" commands.
 Setting or playing any sound is not confirmed by the module so if you need
 confirmation that the module is doing what is expected, you need to use one of
 the get functions to verify that it's doing what you told it to. E.g. when you
-play a sound, you can consequently call `DY::DYPlayer::getPlayingSound()` to
+play a sound, you can consequently call
+[`DY::DYPlayer::getPlayingSound()`](#uint16_t-dydyplayergetplayingsound) to
 check that it worked.
 
 ### Get methods
 
 Get methods will send a command to the module and wait for an answer. If an
-answer is not received a timeout will expire and subsequently an exception will
-be raised. If data is received, a crude CRC check is done, if it fails an
-exception will be raised.
-
-It's recommended you handle these [exceptions](#exceptions) in case there is a
- communcation failure. Or your programme may halt with an unhandled exception.
+answer is not received a timeout will expire and subsequently an they will
+return `0` for sound counts,
 
 ### Command/method list
 
 | Command (from the manual)        |byte| Method name                              |
 |:---------------------------------|:--:|:-----------------------------------------|
-|Check the play state              |`0x01`|[`DY::play_state_t` __DY::DYPlayer::checkPlayState__](#dyplaystatet-dydyplayercheckplaystate)|
+|Check the play state              |`0x01`|[`DY::PlayState::play_state_t` __DY::DYPlayer::checkPlayState__](#dyplaystateplaystatet-dydyplayercheckplaystate)|
 |Play                              |`0x02`|[`void` __DY::DYPlayer::play__](#void-dydyplayerplay)|
 |Pause                             |`0x03`|[`void` __DY::DYPlayer::pause__](#void-dydyplayerpause)|
-|Stop                              |`0x04`|[`play_state_t` __DY::DYPlayer::checkPlayState__](#dyplaystatet-dydyplayercheckplaystate)|
+|Stop                              |`0x04`|[`void` __DY::DYPlayer::stop__](#dyplaystatet-dydyplayerstop)|
 |Previous Music                    |`0x05`|[`void` __DY::DYPlayer::previous__](#void-dydyplayerprevious)|
 |Next music                        |`0x06`|[`void` __DY::DYPlayer::next__](#void-dydyplayernext)|
 |Play specified music              |`0x07`|[`void` __DY::DYPlayer::playSpecified__](#void-dydyplayerplayspecified)|
 |Specified device and path play    |`0x08`|[`void` __DY::DYPlayer::playSpecifiedDevicePath__](#void-dydyplayerplayspecifieddevicepath)|
-|Check Device Online               |`0x09`|[`DY::device_t` __DY::DYPlayer::getDeviceOnline__](#dydevicet-dydyplayergetdeviceonline)|
-|Check Current Playing Device      |`0x0a`|[`DY::device_t` __DY::DYPlayer::getPlayingDevice__](#dydevicet-dydyplayergetplayingdevice)|
+|Check Device Online               |`0x09`|[`DY::Device::device_t` __DY::DYPlayer::getDeviceOnline__](#dydevicet-dydyplayergetdeviceonline)|
+|Check Current Playing Device      |`0x0a`|[`DY::Device::device_t` __DY::DYPlayer::getPlayingDevice__](#dydevicet-dydyplayergetplayingdevice)|
 |Switch to selected device         |`0x0b`|[`void` __DY::DYPlayer::setPlayingDevice__](#void-dydyplayersetplayingdevice)|
-|Check Number Of all Music         |`0x0c`|[`uint16_t` __DY::DYPlayer::getSoundCount__](#uint16t-dydyplayergetsoundcount)|
-|Check Current Music               |`0x0d`|[`uint16_t` __DY::DYPlayer::getPlayingSound__](#uint16t-dydyplayergetplayingsound)|
+|Check Number Of all Music         |`0x0c`|[`uint16_t` __DY::DYPlayer::getSoundCount__](#uint16_t-dydyplayergetsoundcount)|
+|Check Current Music               |`0x0d`|[`uint16_t` __DY::DYPlayer::getPlayingSound__](#uint16_t-dydyplayergetplayingsound)|
 |Previous folder directory (first) |`0x0e`|[`void` __DY::DYPlayer::previousDir__](#void-dydyplayerpreviousdir)|
 |Previous folder directory (last)  |`0x0f`|[`void` __DY::DYPlayer::previousDir__](#void-dydyplayerpreviousdir)|
 |End playing                       |`0x10`|[`void` __DY::DYPlayer::stopInterlude__](#void-dydyplayerstopinterlude)|
-|Check the first music in folder   |`0x11`|[`uint16_t` __DY::DYPlayer::getFirstInDir__](#uint16t-dydyplayergetfirstindir)|
-|Check Number of music in folder   |`0x12`|[`uint16_t` __DY::DYPlayer::getSoundCountDir__](#uint16t-dydyplayergetsoundcountdir)|
+|Check the first music in folder   |`0x11`|[`uint16_t` __DY::DYPlayer::getFirstInDir__](#uint16_t-dydyplayergetfirstindir)|
+|Check Number of music in folder   |`0x12`|[`uint16_t` __DY::DYPlayer::getSoundCountDir__](#uint16_t-dydyplayergetsoundcountdir)|
 |Volume setting                    |`0x13`|[`void` __DY::DYPlayer::setVolume__](#void-dydyplayersetvolume)|
 |Volume+                           |`0x14`|[`void` __DY::DYPlayer::volumeIncrease__](#void-dydyplayervolumeincrease)|
 |Volume-                           |`0x15`|[`void` __DY::DYPlayer::volumeDecrease__](#void-dydyplayervolumedecrease)|
@@ -336,13 +333,14 @@ Where:
 
 ### API documentation
 
-#### [typedef enum class`DY::PlayState::play_state_t`](#typedef-enum-classdyplaystateplay_state_t) DY::DYPlayer::checkPlayState(..)
+#### [DY::play_state_t](#typedef-enum-class-dyplay_state_t) DY::DYPlayer::checkPlayState(..)
 
-Play status: A [DY::PlayState](#typedef-enum-classdyplaymodeplaymode_t),
+Check the current play state can, be called at any time.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [typedef enum class`DY::PlayState::play_state_t`](#typedef-enum-classdyplaystateplay_state_t) | Play status: A [DY::PlayState](#typedef-enum-classdyplaymodeplaymode_t), |
+| __return__ | [DY::play_state_t](#typedef-enum-class-dyplay_state_t) | Play status: A [DY::PlayState](#typedef-enum-classdyplaymodeplaymode_t) e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc  |
 
 
 #### `void` DY::DYPlayer::play(..)
@@ -382,106 +380,127 @@ Play the next file.
 
 #### `void` DY::DYPlayer::playSpecified(..)
 
-number of the file, e.g. `1` for `00001.mp3`.
+Play a sound file by number, number sent as 2 bytes.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`. |
+| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
 #### `void` DY::DYPlayer::playSpecifiedDevicePath(..)
 
-path pointer to the path of the file (asbsolute).
+Play a sound file by device and path.
+Path may consist of up to 2 nested directories of 8 bytes long and a
+file name of 8 bytes long excluding the extension of 4 bytes long.
+If your directory names are shorter you can use more nesting. Use no
+more than 36 bytes for your paths. If you require more, check the
+readme, chapter: Memory use.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t), |
-| __param__ | `char` | path pointer to the path of the file (asbsolute). |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | `char` | path pointer to the path of the file (asbsolute)  |
 
 
-#### [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) DY::DYPlayer::getDeviceOnline(..)
+#### [DY::device_t](#typedef-enum-class-dydevice_t) DY::DYPlayer::getDeviceOnline(..)
 
-device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t),
+Get the device number the module is currently using.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t), |
+| __return__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`  |
 
 
-#### [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) DY::DYPlayer::getPlayingDevice(..)
+#### [DY::device_t](#typedef-enum-class-dydevice_t) DY::DYPlayer::getPlayingDevice(..)
 
-device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t),
+Get the storage device that is currently used for playing sound files.
+
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t), |
+| __return__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH`  |
 
 
 #### `void` DY::DYPlayer::setPlayingDevice(..)
 
-device A [DY::Device member](#typedef-enum-classdydevicedevice_t),
+Set the device number the module should use.
+Tries to set the device but no guarantee is given, use `getDevice()`
+to check the actual current storage device.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t), |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCount(..)
 
-number of sound files.
+Get the amount of sound files on the current storage device.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | `uint16_t` | number of sound files. |
+| __return__ | `uint16_t` | number of sound files  |
 
 
 #### `uint16_t` DY::DYPlayer::getPlayingSound(..)
 
-number of the file currently playing.
+Get the currently playing file by number.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | `uint16_t` | number of the file currently playing. |
+| __return__ | `uint16_t` | number of the file currently playing  |
 
 
 #### `void` DY::DYPlayer::previousDir(..)
 
-song Play DY::PreviousDir::FIRST_SOUND or
+Select previous directory and start playing the first or last song.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `playDirSound_t` | song Play DY::PreviousDir::FIRST_SOUND or |
+| __param__ | `playDirSound_t` | song Play DY::PreviousDir::FIRST_SOUND o DY::PreviousDir::LAST_SOUN  |
 
 
 #### `uint16_t` DY::DYPlayer::getFirstInDir(..)
 
-ExcCrcFail when CRC check on the data fails.
+Get number of the first song in the currently selected directory.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | `uint16_t` | number of the first song in the currently selected directory. |
-| __throw__ | ExcUartFail | ExcUartFail when data can't be read from UART. |
-| __throw__ | ExcCrcFail | ExcCrcFail when CRC check on the data fails. |
+| __return__ | `uint16_t` | number of the first song in the currently selected directory  |
+| __throw__ | ExcUartFail | ExcUartFail when data can't be read from UART  |
+| __throw__ | ExcCrcFail | ExcCrcFail when CRC check on the data fails  |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCountDir(..)
 
-ExcCrcFail when CRC check on the data fails.
+Get the amount of sound files in the currently selected directory.
+NOTE: Excluding files in sub directories.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | `uint16_t` | number of sound files in currently selected directory. |
-| __throw__ | ExcUartFail | ExcUartFail when data can't be read from UART. |
-| __throw__ | ExcCrcFail | ExcCrcFail when CRC check on the data fails. |
+| __return__ | `uint16_t` | number of sound files in currently selected directory  |
+| __throw__ | ExcUartFail | ExcUartFail when data can't be read from UART  |
+| __throw__ | ExcCrcFail | ExcCrcFail when CRC check on the data fails  |
 
 
 #### `void` DY::DYPlayer::setVolume(..)
 
-volume to set (0-30)
+Set the playback volume between 0 and 30.
+Default volume if not set: 20.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | volume to set (0-30) |
+| __param__ | `uint8_t` | volume to set (0-30  |
 
 
 #### `void` DY::DYPlayer::volumeIncrease(..)
@@ -500,22 +519,38 @@ Decrease the volume.
 
 #### `void` DY::DYPlayer::interludeSpecified(..)
 
-number of the file, e.g. `1` for `00001.mp3`.
+Play an interlude file by device and number, number sent as 2 bytes.
+Note from the manual: "Music interlude" only has level 1. Continuous
+interlude will cover the previous interlude (the interlude will be
+played immediately). When the interlude is finished, it will return to
+the first interlude breakpoint and continue to play.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t), |
-| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`. |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
 #### `void` DY::DYPlayer::interludeSpecifiedDevicePath(..)
 
-path pointer to the path of the file (asbsolute).
+Play an interlude by device and path.
+Note from the manual: "Music interlude" only has level 1. Continuous
+interlude will cover the previous interlude (the interlude will be
+played immediately). When the interlude is finished, it will return to
+the first interlude breakpoint and continue to play.
+
+Path may consist of up to 2 nested directories of 8 bytes long and a
+file name of 8 bytes long excluding the extension of 4 bytes long.
+If your directory names are shorter you can use more nesting. Use no
+more than 36 bytes for your paths. If you require more, check the
+readme, chapter: Memory use.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t), |
-| __param__ | `char` | path pointer to the path of the file (asbsolute). |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | `char` | path pointer to the path of the file (asbsolute)  |
 
 
 #### `void` DY::DYPlayer::stopInterlude(..)
@@ -529,136 +564,158 @@ active.
 
 #### `void` DY::DYPlayer::setCycleMode(..)
 
-mode The cycle mode to set.
+Sets the cycle mode.
+See [play_mode_t](#typedef-enum-dyplaymodet) for modes and meaning.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `play_mode_t` | mode The cycle mode to set. |
+| __param__ | `play_mode_t` | mode The cycle mode to set  |
 
 
 #### `void` DY::DYPlayer::setCycleTimes(..)
 
-cycles The cycle count for repeat modes.
+Set how many cycles to play when in cycle modes 0, 1 or 4 (repeat
+modes).
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint16_t` | cycles The cycle count for repeat modes. |
+| __param__ | `uint16_t` | cycles The cycle count for repeat modes  |
 
 
 #### `void` DY::DYPlayer::setEq(..)
 
-eq The equalizer setting.
+Set the equalizer setting.
+See [play_mode_t](#typedef-enum-dyeqt) for settings.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [typedef enum class`DY::Eq::eq_t`](#typedef-enum-classdyeqeq_t) | eq The equalizer setting. |
+| __param__ | [DY::eq_t](#typedef-enum-class-dyeq_t) | eq The equalizer setting  |
 
 
 #### `void` DY::DYPlayer::select(..)
 
-number of the file, e.g. `1` for `00001.mp3`.
+Select a sound file without playing it.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`. |
+| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
 #### `bool` DY::DYPlayer::validateCrc(..)
 
-boolean indicating CRC is correct (true) or incorrect (false).
+Validate data buffer with CRC byte (last byte should be the CRC byte).
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | data pointer to bytes to calculate the CRC for. |
-| __param__ | `uint8_t` | len of data. |
-| __return__ | `bool` | boolean indicating CRC is correct (true) or incorrect (false). |
+| __param__ | `uint8_t` | data pointer to bytes to calculate the CRC for  |
+| __param__ | `uint8_t` | len of data  |
+| __return__ | `bool` | boolean indicating CRC is correct (true) or incorrect (false)  |
 
 
 #### `void` DY::DYPlayer::sendCommand(..)
 
-len of data.
+Send a command to the module, adds a CRC to the passed buffer.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | data pointer to bytes to send to the module. |
-| __param__ | `uint8_t` | len of data. |
+| __param__ | `uint8_t` | data pointer to bytes to send to the module  |
+| __param__ | `uint8_t` | len of data  |
 
 
 #### `void` DY::DYPlayer::sendCommand(..)
 
-crc Precalculated CRC byte.
+Send a command to the module, pass a static crc.
+Use this to optimize speed for static commands.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | data pointer to bytes to send to the module. |
-| __param__ | `uint8_t` | len of data. |
-| __param__ | `uint8_t` | crc Precalculated CRC byte. |
+| __param__ | `uint8_t` | data pointer to bytes to send to the module  |
+| __param__ | `uint8_t` | len of data  |
+| __param__ | `uint8_t` | crc Precalculated CRC byte  |
 
 
 #### `bool` DY::DYPlayer::getResponse(..)
 
-False on communication failure.
+Get a response to a command.
+Reads data from UART, validates the CRC, and puts it in the buffer.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | buffer pointer for the bytes to receive. |
-| __param__ | `uint8_t` | len of buffer. |
-| __return__ | `bool` | False on communication failure. |
+| __param__ | `uint8_t` | buffer pointer for the bytes to receive  |
+| __param__ | `uint8_t` | len of buffer  |
+| __return__ | `bool` | False on communication failure  |
 
 
 #### `void` DY::DYPlayer::byPathCommand(..)
 
-path of the file (asbsolute).
+Send command with converted paths to  weird format required by the
+modules.
+
+- Any dot in a path should become a star (`*`)
+- Path ending slashes should be have a star prefix, except root.
+
+E.g.: /SONGS1/FILE1.MP3 should become: /SONGS1﹡/FILE1*MP3
+NOTE: This comment uses a unicode * look-a-alike (﹡) because ﹡/ end the
+comment.
+
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | command The command to send. |
-| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t), |
-| __param__ | `char` | path of the file (asbsolute). |
+| __param__ | `uint8_t` | command The command to send  |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | `char` | path of the file (asbsolute)  |
 
 
-#### typedef enum class`DY::Device::device_t`
+#### typedef enum class DY::device_t
 
 Storage devices reported by module and to choose from when selecting a
 storage device.
 
 | const | value | description |
 |:------|:------|:------------|
-| `USB` | `0x00` | USB Storage device. |
-| `SD` | `0x01` | SD Card. |
-| `FLASH` | `0x02` | Onboard flash chip (usually winbond 32, 64Mbit flash). |
-| `DUNNO` | `0x04` | Some boards report this as the online storage device.. |
-| `FAIL` | `0xfe` | UART failure, can't be `-1` (so this can be uint8_t). |
-| `NO_DEVICE` | `0xff` | No storage device is online. |
+| `DY::Device::USB` | `0x00` | USB Storage device. |
+| `DY::Device::SD` | `0x01` | SD Card. |
+| `DY::Device::FLASH` | `0x02` | Onboard flash chip (usually winbond 32, 64Mbit flash). |
+| `DY::Device::DUNNO` | `0x04` | Some boards report this as the online storage device.. |
+| `DY::Device::FAIL` | `0xfe` | UART failure, can't be `-1` (so this can be uint8_t). |
+| `DY::Device::NO_DEVICE` | `0xff` | No storage device is online. |
 
 This enum class is based off uint8_t.
 
 
-#### typedef enum class`DY::PlayState::play_state_t`
+#### typedef enum class DY::play_state_t
 
 The current module play state.
 
 | const | value | description |
 |:------|:------|:------------|
-| `FAIL` | `-1` | UART Failure, can be a connection or a CRC problem. |
-| `STOPPED` | `0` |  |
-| `PLAYING` | `1` |  |
-| `PAUSED` | `2` |  |
+| `DY::PlayState::FAIL` | `-1` | UART Failure, can be a connection or a CRC problem. |
+| `DY::PlayState::STOPPED` | `0` |  |
+| `DY::PlayState::PLAYING` | `1` |  |
+| `DY::PlayState::PAUSED` | `2` |  |
 
 This enum class is based off int8_t.
 
 
-#### typedef enum class`DY::Eq::eq_t`
+#### typedef enum class DY::eq_t
 
 Equalize settings.
 
 | const | value |
 |:------|:------|
-| `NORMAL` | `0x00` |
-| `POP` | `0x01` |
-| `ROCK` | `0x02` |
-| `JAZZ` | `0x03` |
-| `CLASSIC` | `0x04` |
+| `DY::Eq::NORMAL` | `0x00` |
+| `DY::Eq::POP` | `0x01` |
+| `DY::Eq::ROCK` | `0x02` |
+| `DY::Eq::JAZZ` | `0x03` |
+| `DY::Eq::CLASSIC` | `0x04` |
 
 This enum class is based off uint8_t.
 
