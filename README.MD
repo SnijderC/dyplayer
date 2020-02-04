@@ -6,6 +6,10 @@ Always reference the
 source of documentation if you download the library through
 [platform.io](https://platformio.org).
 
+__Library has and probably will be under heavy development for a while. The API
+could still change significantly. Stick with your major version number if you
+don't want to have breaking changes.__
+
 # Abstracted UART Control of DY-XXXX mp3 modules
 
 This library abstracts almost all features described in the manual into a C++
