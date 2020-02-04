@@ -117,8 +117,8 @@ def parse_enums(source):
         }
 
         # The anchor github will also generate to link to this enum. E.g.:
-        # https://github.com/SnijderC/dyplayer#enum-typedef-dydevicedevice_t
-        slug = re.sub("[#:_]", "", heading).lower().strip().replace(" ", "-")
+        # https://github.com/SnijderC/dyplayer#typedef-enum-dydevicedevice_t
+        slug = re.sub("[#:]`", "", heading).lower().strip().replace(" ", "-")
         anchor = "[`%s`](#%s)" % (
             re.sub("^#+\s", "", heading),
             slug
