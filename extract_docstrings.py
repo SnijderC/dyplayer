@@ -105,7 +105,7 @@ def parse_enums(source):
             body += enum_fmt % definition
 
         if classname:
-            heading_fmt = "%(hl)s typedef enum `%(ns)s::%(class)s::%(enum)s`"
+            heading_fmt = "%(hl)s typedef enum class`%(ns)s::%(class)s::%(enum)s`"
         else:
             heading_fmt = "%(hl)s typedef enum `%(ns)s::%(enum)s`"
 
@@ -118,7 +118,7 @@ def parse_enums(source):
 
         # The anchor github will also generate to link to this enum. E.g.:
         # https://github.com/SnijderC/dyplayer#typedef-enum-dydevicedevice_t
-        slug = re.sub("[#:]`", "", heading).lower().strip().replace(" ", "-")
+        slug = re.sub("[#:`]", "", heading).lower().strip().replace(" ", "-")
         anchor = "[`%s`](#%s)" % (
             re.sub("^#+\s", "", heading),
             slug
