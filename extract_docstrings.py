@@ -46,7 +46,9 @@ RE_NOT_DEFINITION = re.compile('@(?:return|param|throw)', re.DOTALL)
 #: Find all enums contents
 RE_ENUMS_PARSE = re.compile((
     '\/\*\*\n\s+\*\s+(?P<docstring>([^\n]+\n)+)\s+?\*\/\s*\n\s*'
-    'typedef\s+enum\s+{\n(?P<body>[^\}]+)[\n\s]+}\s+'
+    'typedef\s+enum\s+(class)?\s+(?P<classname>[a-zA-Z0-9-_]+)'
+    '(?:\:\s*(?P<extends>[a-zA-Z0-9-_]+))?\s*{\n'
+    '(?P<body>[^\}]+)[\n\s]+}\s+'
     '(?P<enum_t>[a-zA-Z0-9-_]+);'
     ),
     re.DOTALL
@@ -72,6 +74,9 @@ def parse_enums(source):
         docstring = RE_CLEAN_DESCRIPTION.sub("", enum.group('docstring'))
 
         matches = RE_ENUM_BODY_PARSE.finditer(enum.group('body'))
+        classname = enum.group('classname')
+        extends = enum.group('extends')
+
         enum_list = []
         for i, definition in enumerate(matches):
             description = definition.group('comment')
@@ -99,18 +104,27 @@ def parse_enums(source):
         for definition in enum_list:
             body += enum_fmt % definition
 
+        if classname:
+            heading_fmt = "%(hl)s enum typedef `%(ns)s::%(class)s::%(enum)s`"
+        else:
+            heading_fmt = "%s enum typedef `%s::%s`"
 
-        heading = "%s enum typedef `%s::%s`" % (
-            HEADING_LEVEL * "#",
-            NAMESPACE,
-            enum_t
-        )
+        heading = heading_fmt % {
+            'hl': HEADING_LEVEL * "#",
+            'ns': NAMESPACE,
+            'enum': enum_t,
+            'class': classname
+        }
         # The anchor github will also generate to link to this enum.
         anchor = "[`%s`](#enum-typedef-%s%s)" % (
             "%s::%s" % (NAMESPACE, enum_t),
-            NAMESPACE,
-            enum_t.replace("_", "")
+            NAMESPACE.lower(),
+            enum_t.replace("_", "").lower()
         )
+
+        if extends:
+            body += "\nThis enum class is based off %s.\n" % extends
+
         enums[enum_t] = {
             'heading': heading,
             'docstring': docstring,
@@ -122,7 +136,7 @@ def parse_enums(source):
 def print_enums(enums):
     for enum_t, enum in enums.items():
         print(
-            "%s\n\n%s\n\n%s\n" % (
+            "%s\n\n%s\n%s\n" % (
                 enum['heading'],
                 enum['docstring'],
                 enum['body']
@@ -180,7 +194,7 @@ def print_class_methods(source, enums):
         if RE_DEFINITION.search(docstring):
             # If there are, start a table heading.
             table += "|           | __Type__ | __Description__  |\n"
-            table += "|:----------|:--------:|:-----------------|\n"
+            table += "|:----------|:---------|:-----------------|\n"
         # Iterate over all definitions of param, return and throw.
         for definition in RE_DEFINITION.finditer(docstring):
             # Are we dealing with a param, return or throw?

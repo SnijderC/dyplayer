@@ -68,7 +68,7 @@ namespace DY {
     _command[0] = 0xaa;
     _command[1] = command;
     _command[2] = _len + 1;
-    _command[3] = device;
+    _command[3] = (uint8_t) device;
     _command[4] = path[0];
     uint8_t j = 5;
     for (uint8_t i = 1; i < len; i++) {
@@ -91,13 +91,14 @@ namespace DY {
     #endif
   }
 
-  uint8_t DYPlayer::checkPlayState() {
+  play_state_t DYPlayer::checkPlayState() {
     uint8_t command[3] = { 0xaa, 0x01, 0x00 };
     sendCommand(command, 3, 0xab);
     uint8_t buffer[6];
-    if(getResponse(buffer, 6))
-      return buffer[3];
-    return 0;
+    if (getResponse(buffer, 6)) {
+      return (play_state_t) buffer[3];
+    }
+    return DY::PlayState::FAIL;
   }
 
   void DYPlayer::play() {
@@ -135,31 +136,39 @@ namespace DY {
     byPathCommand(0x08, device, path);
   }
 
-  bool DYPlayer::checkDeviceOnline() {
-    return (getDevice() != -1);
-  }
-
-  device_t DYPlayer::getDevice() {
+  device_t DYPlayer::getDeviceOnline() {
     uint8_t command[3] = { 0xaa, 0x09, 0x00 };
     sendCommand(command, 3, 0xb3);
     uint8_t buffer[5];
-    if(getResponse(buffer, 5))
-      return (device_t)buffer[3];
-    return FAIL;
+    if (getResponse(buffer, 5)) {
+      return (device_t) buffer[3];
+    }
+    return DY::Device::FAIL;
   }
 
-  void DYPlayer::setDevice(device_t device) {
+  device_t DYPlayer::getPlayingDevice() {
+    uint8_t command[3] = { 0xaa, 0x0a, 0x00 };
+    sendCommand(command, 3, 0xb4);
+    uint8_t buffer[5];
+    if (getResponse(buffer, 5)) {
+      return (device_t)buffer[3];
+    }
+    return DY::Device::FAIL;
+  }
+
+  void DYPlayer::setPlayingDevice(device_t device) {
     uint8_t command[4] = { 0xaa, 0x0b, 0x01, 0x00 };
-    command[3] = device;
+    command[3] = (uint8_t) device;
     sendCommand(command, 4);
   }
 
-  uint16_t DYPlayer::soundCount() {
+  uint16_t DYPlayer::getSoundCount() {
     uint8_t command[3] = { 0xaa, 0x0c, 0x00 };
     sendCommand(command, 3, 0xb6);
     uint8_t buffer[6];
-    if (getResponse(buffer, 6))
+    if(getResponse(buffer, 6)) {
       return (buffer[3] << 8) | buffer[4];
+    }
     return 0;
   }
 
@@ -167,8 +176,9 @@ namespace DY {
     uint8_t command[3] = { 0xaa, 0x0d, 0x00 };
     sendCommand(command, 3, 0xb7);
     uint8_t buffer[6];
-    if (getResponse(buffer, 6))
+    if(getResponse(buffer, 6)) {
       return (buffer[3] << 8) | buffer[4];
+    }
     return 0;
   }
 
@@ -182,21 +192,23 @@ namespace DY {
     }
   }
 
-  uint16_t DYPlayer::firstInDir() {
+  uint16_t DYPlayer::getFirstInDir() {
     uint8_t command[3] = { 0xaa, 0x11, 0x00 };
     sendCommand(command, 3, 0xbb);
     uint8_t buffer[6];
-    if (getResponse(buffer, 6))
+    if(getResponse(buffer, 6)) {
       return (buffer[3] << 8) | buffer[4];
+    }
     return 0;
   }
 
-  uint16_t DYPlayer::soundCountDir() {
+  uint16_t DYPlayer::getSoundCountDir() {
     uint8_t command[3] = { 0xaa, 0x12, 0x00 };
     sendCommand(command, 3, 0xbc);
     uint8_t buffer[6];
-    if (getResponse(buffer, 6))
+    if(getResponse(buffer, 6)) {
       return (buffer[3] << 8) | buffer[4];
+    }
     return 0;
   }
 
@@ -218,7 +230,7 @@ namespace DY {
 
   void DYPlayer::interludeSpecified(device_t device, uint16_t number) {
     uint8_t command[6] = { 0xaa, 0x0b, 0x03, 0x00, 0x00, 0x00 };
-    command[3] = device;
+    command[3] = (uint8_t) device;
     command[4] = number >> 8;
     command[5] = number & 0xff;
     sendCommand(command, 6);
@@ -247,7 +259,7 @@ namespace DY {
 
   void DYPlayer::setEq(eq_t eq) {
     uint8_t command[4] = { 0xaa, 0x1a, 0x01, 0x00 };
-    command[3] = eq;
+    command[3] = (uint8_t) eq;
     sendCommand(command, 4);
   }
 

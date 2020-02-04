@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "DYPlayerArduino.h"
-#include <inttypes.h>
 
 // Initialise the player, it defaults to using Serial.
 DY::Player player;
