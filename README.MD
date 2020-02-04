@@ -336,17 +336,19 @@ Where:
 
 ### API documentation
 
-#### [`DY::play_state_t`](#enum-typedef-dyplaystatet) DY::DYPlayer::checkPlayState(..)
+#### [`typedef enum `DY::PlayState::play_state_t``](#typedef-enum-`dyplaystateplaystatet`) DY::DYPlayer::checkPlayState(..)
 
-Play status: DY::STOPPED, DY::PLAYING, DY::PAUSED, DY::FAIL.
+Play status: A [DY::PlayState](#typedef-enum-class-dyplaymode),
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [`DY::play_state_t`](#enum-typedef-dyplaystatet) | Play status: DY::STOPPED, DY::PLAYING, DY::PAUSED, DY::FAIL. |
+| __return__ | [`typedef enum `DY::PlayState::play_state_t``](#typedef-enum-`dyplaystateplaystatet`) | Play status: A [DY::PlayState](#typedef-enum-class-dyplaymode), |
 
 
 #### `void` DY::DYPlayer::play(..)
 
 Play the currently selected file from the start.
+
 
 
 
@@ -356,9 +358,11 @@ Set the play state to paused.
 
 
 
+
 #### `void` DY::DYPlayer::stop(..)
 
 Set the play state to stopped.
+
 
 
 
@@ -368,15 +372,18 @@ Play the preivous file.
 
 
 
+
 #### `void` DY::DYPlayer::next(..)
 
 Play the next file.
 
 
 
+
 #### `void` DY::DYPlayer::playSpecified(..)
 
 number of the file, e.g. `1` for `00001.mp3`.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`. |
@@ -385,39 +392,44 @@ number of the file, e.g. `1` for `00001.mp3`.
 #### `void` DY::DYPlayer::playSpecifiedDevicePath(..)
 
 path pointer to the path of the file (asbsolute).
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#enum-typedef-dydevicet) | device A [DY::Device member](#typedef-enum-class-dydevicet), |
+| __param__ | [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) | device A [DY::Device member](#typedef-enum-class-dydevicet), |
 | __param__ | `char` | path pointer to the path of the file (asbsolute). |
 
 
-#### [`DY::device_t`](#enum-typedef-dydevicet) DY::DYPlayer::getDeviceOnline(..)
+#### [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) DY::DYPlayer::getDeviceOnline(..)
 
 device A [`DY::Device member`](#typedef-enum-class-dydevicet),
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [`DY::device_t`](#enum-typedef-dydevicet) | device A [`DY::Device member`](#typedef-enum-class-dydevicet), |
+| __return__ | [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) | device A [`DY::Device member`](#typedef-enum-class-dydevicet), |
 
 
-#### [`DY::device_t`](#enum-typedef-dydevicet) DY::DYPlayer::getPlayingDevice(..)
+#### [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) DY::DYPlayer::getPlayingDevice(..)
 
 device A [`DY::Device member`](#typedef-enum-class-dydevicet),
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [`DY::device_t`](#enum-typedef-dydevicet) | device A [`DY::Device member`](#typedef-enum-class-dydevicet), |
+| __return__ | [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) | device A [`DY::Device member`](#typedef-enum-class-dydevicet), |
 
 
 #### `void` DY::DYPlayer::setPlayingDevice(..)
 
 device A [DY::Device member](#typedef-enum-class-dydevicet),
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#enum-typedef-dydevicet) | device A [DY::Device member](#typedef-enum-class-dydevicet), |
+| __param__ | [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) | device A [DY::Device member](#typedef-enum-class-dydevicet), |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCount(..)
 
 number of sound files.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __return__ | `uint16_t` | number of sound files. |
@@ -426,6 +438,7 @@ number of sound files.
 #### `uint16_t` DY::DYPlayer::getPlayingSound(..)
 
 number of the file currently playing.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __return__ | `uint16_t` | number of the file currently playing. |
@@ -434,6 +447,7 @@ number of the file currently playing.
 #### `void` DY::DYPlayer::previousDir(..)
 
 song Play DY::PreviousDir::FIRST_SOUND or
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `playDirSound_t` | song Play DY::PreviousDir::FIRST_SOUND or |
@@ -442,6 +456,7 @@ song Play DY::PreviousDir::FIRST_SOUND or
 #### `uint16_t` DY::DYPlayer::getFirstInDir(..)
 
 ExcCrcFail when CRC check on the data fails.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __return__ | `uint16_t` | number of the first song in the currently selected directory. |
@@ -452,6 +467,7 @@ ExcCrcFail when CRC check on the data fails.
 #### `uint16_t` DY::DYPlayer::getSoundCountDir(..)
 
 ExcCrcFail when CRC check on the data fails.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __return__ | `uint16_t` | number of sound files in currently selected directory. |
@@ -462,6 +478,7 @@ ExcCrcFail when CRC check on the data fails.
 #### `void` DY::DYPlayer::setVolume(..)
 
 volume to set (0-30)
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint8_t` | volume to set (0-30) |
@@ -473,27 +490,31 @@ Increase the volume.
 
 
 
+
 #### `void` DY::DYPlayer::volumeDecrease(..)
 
 Decrease the volume.
 
 
 
+
 #### `void` DY::DYPlayer::interludeSpecified(..)
 
 number of the file, e.g. `1` for `00001.mp3`.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#enum-typedef-dydevicet) | device number USB, SD, FLASH |
+| __param__ | [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) | device A [DY::Device member](#typedef-enum-class-dydevicet), |
 | __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`. |
 
 
 #### `void` DY::DYPlayer::interludeSpecifiedDevicePath(..)
 
 path pointer to the path of the file (asbsolute).
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#enum-typedef-dydevicet) | device number USB, SD, FLASH |
+| __param__ | [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) | device A [DY::Device member](#typedef-enum-class-dydevicet), |
 | __param__ | `char` | path pointer to the path of the file (asbsolute). |
 
 
@@ -505,9 +526,11 @@ active.
 
 
 
+
 #### `void` DY::DYPlayer::setCycleMode(..)
 
 mode The cycle mode to set.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `play_mode_t` | mode The cycle mode to set. |
@@ -516,6 +539,7 @@ mode The cycle mode to set.
 #### `void` DY::DYPlayer::setCycleTimes(..)
 
 cycles The cycle count for repeat modes.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint16_t` | cycles The cycle count for repeat modes. |
@@ -524,14 +548,16 @@ cycles The cycle count for repeat modes.
 #### `void` DY::DYPlayer::setEq(..)
 
 eq The equalizer setting.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`DY::eq_t`](#enum-typedef-dyeqt) | eq The equalizer setting. |
+| __param__ | [`typedef enum `DY::Eq::eq_t``](#typedef-enum-`dyeqeqt`) | eq The equalizer setting. |
 
 
 #### `void` DY::DYPlayer::select(..)
 
 number of the file, e.g. `1` for `00001.mp3`.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`. |
@@ -540,6 +566,7 @@ number of the file, e.g. `1` for `00001.mp3`.
 #### `bool` DY::DYPlayer::validateCrc(..)
 
 boolean indicating CRC is correct (true) or incorrect (false).
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint8_t` | data pointer to bytes to calculate the CRC for. |
@@ -550,6 +577,7 @@ boolean indicating CRC is correct (true) or incorrect (false).
 #### `void` DY::DYPlayer::sendCommand(..)
 
 len of data.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint8_t` | data pointer to bytes to send to the module. |
@@ -559,6 +587,7 @@ len of data.
 #### `void` DY::DYPlayer::sendCommand(..)
 
 crc Precalculated CRC byte.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint8_t` | data pointer to bytes to send to the module. |
@@ -569,6 +598,7 @@ crc Precalculated CRC byte.
 #### `bool` DY::DYPlayer::getResponse(..)
 
 False on communication failure.
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint8_t` | buffer pointer for the bytes to receive. |
@@ -579,14 +609,15 @@ False on communication failure.
 #### `void` DY::DYPlayer::byPathCommand(..)
 
 path of the file (asbsolute).
+
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint8_t` | command The command to send. |
-| __param__ | [`DY::device_t`](#enum-typedef-dydevicet) | device number DY::USB, DY::SD, DY::FLASH. |
+| __param__ | [`typedef enum `DY::Device::device_t``](#typedef-enum-`dydevicedevicet`) | device A [DY::Device member](#typedef-enum-class-dydevicet), |
 | __param__ | `char` | path of the file (asbsolute). |
 
 
-#### enum typedef `DY::Device::device_t`
+#### typedef enum `DY::Device::device_t`
 
 Storage devices reported by module and to choose from when selecting a
 storage device.
@@ -603,7 +634,7 @@ storage device.
 This enum class is based off uint8_t.
 
 
-#### enum typedef `DY::PlayState::play_state_t`
+#### typedef enum `DY::PlayState::play_state_t`
 
 The current module play state.
 
@@ -617,7 +648,7 @@ The current module play state.
 This enum class is based off int8_t.
 
 
-#### enum typedef `DY::Eq::eq_t`
+#### typedef enum `DY::Eq::eq_t`
 
 Equalize settings.
 

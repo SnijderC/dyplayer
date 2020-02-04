@@ -111,7 +111,8 @@ namespace DY {
 
       /**
        * Check the current play state can, be called at any time.
-       * @return Play status: DY::STOPPED, DY::PLAYING, DY::PAUSED, DY::FAIL.
+       * @return Play status: A [DY::PlayState](#typedef-enum-class-dyplaymode),
+       *         e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc.
        */
       play_state_t checkPlayState();
 
@@ -242,7 +243,8 @@ namespace DY {
        * interlude will cover the previous interlude (the interlude will be
        * played immediately). When the interlude is finished, it will return to
        * the first interlude breakpoint and continue to play.
-       * @param device number USB, SD, FLASH
+       * @param device A [DY::Device member](#typedef-enum-class-dydevicet),
+       *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
        * @param number of the file, e.g. `1` for `00001.mp3`.
        */
       void interludeSpecified(device_t device, uint16_t number);
@@ -259,7 +261,8 @@ namespace DY {
        * If your directory names are shorter you can use more nesting. Use no
        * more than 36 bytes for your paths. If you require more, check the
        * readme, chapter: Memory use.
-       * @param device number USB, SD, FLASH
+       * @param device A [DY::Device member](#typedef-enum-class-dydevicet),
+       *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
        * @param path pointer to the path of the file (asbsolute).
        */
       void interludeSpecifiedDevicePath(device_t device, char *path);
@@ -274,7 +277,7 @@ namespace DY {
 
       /**
        * Sets the cycle mode.
-       * See [play_mode_t](#enum-typedef-dyplaymodet) for modes and meaning.
+       * See [play_mode_t](#typedef-enum-dyplaymodet) for modes and meaning.
        * @param mode The cycle mode to set.
        */
       void setCycleMode(play_mode_t mode);
@@ -288,7 +291,7 @@ namespace DY {
 
       /**
        * Set the equalizer setting.
-       * See [play_mode_t](#enum-typedef-dyeqt) for settings.
+       * See [play_mode_t](#typedef-enum-dyeqt) for settings.
        * @param eq The equalizer setting.
        */
       void setEq(eq_t eq);
@@ -353,7 +356,8 @@ namespace DY {
      * NOTE: This comment uses a unicode * look-a-alike (﹡) because ﹡/ end the
      * comment.
      * @param command The command to send.
-     * @param device number DY::USB, DY::SD, DY::FLASH.
+     * @param device A [DY::Device member](#typedef-enum-class-dydevicet),
+     *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
      * @param path of the file (asbsolute).
      */
     void byPathCommand(uint8_t command, device_t device, char *path);

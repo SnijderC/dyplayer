@@ -105,9 +105,9 @@ def parse_enums(source):
             body += enum_fmt % definition
 
         if classname:
-            heading_fmt = "%(hl)s enum typedef `%(ns)s::%(class)s::%(enum)s`"
+            heading_fmt = "%(hl)s typedef enum `%(ns)s::%(class)s::%(enum)s`"
         else:
-            heading_fmt = "%s enum typedef `%s::%s`"
+            heading_fmt = "%(hl)s typedef enum `%(ns)s::%(enum)s`"
 
         heading = heading_fmt % {
             'hl': HEADING_LEVEL * "#",
@@ -115,11 +115,13 @@ def parse_enums(source):
             'enum': enum_t,
             'class': classname
         }
-        # The anchor github will also generate to link to this enum.
-        anchor = "[`%s`](#enum-typedef-%s%s)" % (
-            "%s::%s" % (NAMESPACE, enum_t),
-            NAMESPACE.lower(),
-            enum_t.replace("_", "").lower()
+
+        # The anchor github will also generate to link to this enum. E.g.:
+        # https://github.com/SnijderC/dyplayer#enum-typedef-dydevicedevice_t
+        slug = re.sub("[#:_]", "", heading).lower().strip().replace(" ", "-")
+        anchor = "[`%s`](#%s)" % (
+            re.sub("^#+\s", "", heading),
+            slug
         )
 
         if extends:
@@ -226,7 +228,7 @@ def print_class_methods(source, enums):
                 "| __%s__ | %s | %s |\n" % (deftype, param_type, description)
             )
         # Output heading, description and definition table.
-        print("%s\n\n%s\n%s\n" % (heading, description, table))
+        print("%s\n\n%s\n\n%s\n" % (heading, description, table))
 
 def main():
     # Read the input file in one go.
