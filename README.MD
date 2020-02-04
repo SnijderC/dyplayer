@@ -336,13 +336,13 @@ Where:
 
 ### API documentation
 
-#### [`typedef enum class`DY::PlayState::play_state_t``](#typedef-enum-classdyplaystateplay_state_t) DY::DYPlayer::checkPlayState(..)
+#### [typedef enum class`DY::PlayState::play_state_t`](#typedef-enum-classdyplaystateplay_state_t) DY::DYPlayer::checkPlayState(..)
 
-Play status: A [DY::PlayState](#typedef-enum-class-dyplaymode_t),
+Play status: A [DY::PlayState](#typedef-enum-classdyplaymode_t),
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [`typedef enum class`DY::PlayState::play_state_t``](#typedef-enum-classdyplaystateplay_state_t) | Play status: A [DY::PlayState](#typedef-enum-class-dyplaymode_t), |
+| __return__ | [typedef enum class`DY::PlayState::play_state_t`](#typedef-enum-classdyplaystateplay_state_t) | Play status: A [DY::PlayState](#typedef-enum-classdyplaymode_t), |
 
 
 #### `void` DY::DYPlayer::play(..)
@@ -395,35 +395,35 @@ path pointer to the path of the file (asbsolute).
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t), |
+| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevice_t), |
 | __param__ | `char` | path pointer to the path of the file (asbsolute). |
 
 
-#### [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) DY::DYPlayer::getDeviceOnline(..)
+#### [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) DY::DYPlayer::getDeviceOnline(..)
 
-device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
-
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __return__ | [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t), |
-
-
-#### [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) DY::DYPlayer::getPlayingDevice(..)
-
-device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
+device A [`DY::Device member`](#typedef-enum-classdydevice_t),
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t), |
+| __return__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [`DY::Device member`](#typedef-enum-classdydevice_t), |
+
+
+#### [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) DY::DYPlayer::getPlayingDevice(..)
+
+device A [`DY::Device member`](#typedef-enum-classdydevice_t),
+
+|           | __Type__ | __Description__  |
+|:----------|:---------|:-----------------|
+| __return__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [`DY::Device member`](#typedef-enum-classdydevice_t), |
 
 
 #### `void` DY::DYPlayer::setPlayingDevice(..)
 
-device A [DY::Device member](#typedef-enum-class-dydevice_t),
+device A [DY::Device member](#typedef-enum-classdydevice_t),
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t), |
+| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevice_t), |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCount(..)
@@ -504,7 +504,7 @@ number of the file, e.g. `1` for `00001.mp3`.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t), |
+| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevice_t), |
 | __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`. |
 
 
@@ -514,7 +514,7 @@ path pointer to the path of the file (asbsolute).
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t), |
+| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevice_t), |
 | __param__ | `char` | path pointer to the path of the file (asbsolute). |
 
 
@@ -551,7 +551,7 @@ eq The equalizer setting.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`typedef enum class`DY::Eq::eq_t``](#typedef-enum-classdyeqeq_t) | eq The equalizer setting. |
+| __param__ | [typedef enum class`DY::Eq::eq_t`](#typedef-enum-classdyeqeq_t) | eq The equalizer setting. |
 
 
 #### `void` DY::DYPlayer::select(..)
@@ -613,7 +613,7 @@ path of the file (asbsolute).
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint8_t` | command The command to send. |
-| __param__ | [`typedef enum class`DY::Device::device_t``](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t), |
+| __param__ | [typedef enum class`DY::Device::device_t`](#typedef-enum-classdydevicedevice_t) | device A [DY::Device member](#typedef-enum-classdydevice_t), |
 | __param__ | `char` | path of the file (asbsolute). |
 
 
@@ -661,6 +661,7 @@ Equalize settings.
 | `CLASSIC` | `0x04` |
 
 This enum class is based off uint8_t.
+
 
  ## Loading sound files
 
