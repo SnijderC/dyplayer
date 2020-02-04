@@ -340,7 +340,7 @@ Check the current play state can, be called at any time.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [DY::play_state_t](#typedef-enum-class-dyplay_state_t) | Play status: A [DY::PlayState](#typedef-enum-classdyplaymodeplaymode_t) e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc  |
+| __return__ | [DY::play_state_t](#typedef-enum-class-dyplay_state_t) | Play status: A [DY::PlayState](#typedef-enum-class-dyplaymode_t) e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc  |
 
 
 #### `void` DY::DYPlayer::play(..)
@@ -400,7 +400,7 @@ readme, chapter: Memory use.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 | __param__ | `char` | path pointer to the path of the file (asbsolute)  |
 
 
@@ -411,7 +411,7 @@ Get the device number the module is currently using.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`  |
+| __return__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`  |
 
 
 #### [DY::device_t](#typedef-enum-class-dydevice_t) DY::DYPlayer::getPlayingDevice(..)
@@ -422,7 +422,7 @@ Get the storage device that is currently used for playing sound files.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __return__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH`  |
+| __return__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH`  |
 
 
 #### `void` DY::DYPlayer::setPlayingDevice(..)
@@ -434,7 +434,7 @@ to check the actual current storage device.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCount(..)
@@ -475,8 +475,6 @@ Get number of the first song in the currently selected directory.
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __return__ | `uint16_t` | number of the first song in the currently selected directory  |
-| __throw__ | ExcUartFail | ExcUartFail when data can't be read from UART  |
-| __throw__ | ExcCrcFail | ExcCrcFail when CRC check on the data fails  |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCountDir(..)
@@ -488,8 +486,6 @@ NOTE: Excluding files in sub directories.
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __return__ | `uint16_t` | number of sound files in currently selected directory  |
-| __throw__ | ExcUartFail | ExcUartFail when data can't be read from UART  |
-| __throw__ | ExcCrcFail | ExcCrcFail when CRC check on the data fails  |
 
 
 #### `void` DY::DYPlayer::setVolume(..)
@@ -528,7 +524,7 @@ the first interlude breakpoint and continue to play.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 | __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
@@ -549,7 +545,7 @@ readme, chapter: Memory use.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 | __param__ | `char` | path pointer to the path of the file (asbsolute)  |
 
 
@@ -587,7 +583,7 @@ modes).
 #### `void` DY::DYPlayer::setEq(..)
 
 Set the equalizer setting.
-See [play_mode_t](#typedef-enum-dyeqt) for settings.
+See [play_mode_t](#typedef-enum-class-dyeq_t) for settings.
 
 
 |           | __Type__ | __Description__  |
@@ -603,75 +599,6 @@ Select a sound file without playing it.
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
-
-
-#### `bool` DY::DYPlayer::validateCrc(..)
-
-Validate data buffer with CRC byte (last byte should be the CRC byte).
-
-
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | data pointer to bytes to calculate the CRC for  |
-| __param__ | `uint8_t` | len of data  |
-| __return__ | `bool` | boolean indicating CRC is correct (true) or incorrect (false)  |
-
-
-#### `void` DY::DYPlayer::sendCommand(..)
-
-Send a command to the module, adds a CRC to the passed buffer.
-
-
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | data pointer to bytes to send to the module  |
-| __param__ | `uint8_t` | len of data  |
-
-
-#### `void` DY::DYPlayer::sendCommand(..)
-
-Send a command to the module, pass a static crc.
-Use this to optimize speed for static commands.
-
-
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | data pointer to bytes to send to the module  |
-| __param__ | `uint8_t` | len of data  |
-| __param__ | `uint8_t` | crc Precalculated CRC byte  |
-
-
-#### `bool` DY::DYPlayer::getResponse(..)
-
-Get a response to a command.
-Reads data from UART, validates the CRC, and puts it in the buffer.
-
-
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | buffer pointer for the bytes to receive  |
-| __param__ | `uint8_t` | len of buffer  |
-| __return__ | `bool` | False on communication failure  |
-
-
-#### `void` DY::DYPlayer::byPathCommand(..)
-
-Send command with converted paths to  weird format required by the
-modules.
-
-- Any dot in a path should become a star (`*`)
-- Path ending slashes should be have a star prefix, except root.
-
-E.g.: /SONGS1/FILE1.MP3 should become: /SONGS1﹡/FILE1*MP3
-NOTE: This comment uses a unicode * look-a-alike (﹡) because ﹡/ end the
-comment.
-
-
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | command The command to send  |
-| __param__ | [DY::device_t](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-classdydevicedevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
-| __param__ | `char` | path of the file (asbsolute)  |
 
 
 #### typedef enum class DY::device_t

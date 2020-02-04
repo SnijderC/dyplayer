@@ -239,6 +239,9 @@ def main():
     with open(INPUT_FILE, "r") as fh:
         source = fh.read()
 
+    # Don't include the private methods in the API docs.
+    source = source.split("private:")[0]
+
     enums = parse_enums(source)
     print_class_methods(source, enums)
     print_enums(enums)
