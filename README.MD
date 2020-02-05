@@ -434,7 +434,7 @@ to check the actual current storage device.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [1DY::Device member1](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCount(..)
@@ -524,7 +524,7 @@ the first interlude breakpoint and continue to play.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 | __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
@@ -545,7 +545,7 @@ readme, chapter: Memory use.
 
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [DY::Device member](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 | __param__ | `char` | path pointer to the path of the file (asbsolute)  |
 
 
@@ -561,7 +561,8 @@ active.
 #### `void` DY::DYPlayer::setCycleMode(..)
 
 Sets the cycle mode.
-See [play_mode_t](#typedef-enum-class-dyplaymode_t) for modes and meaning.
+See [1DY::play_state_t1](#typedef-enum-class-dyplay_state_t) for modes
+and meaning.
 
 
 |           | __Type__ | __Description__  |
@@ -583,7 +584,7 @@ modes).
 #### `void` DY::DYPlayer::setEq(..)
 
 Set the equalizer setting.
-See [DY::eq_t](#typedef-enum-class-dyeq_t) for settings.
+See [1DY::eq_t1](#typedef-enum-class-dyeq_t) for settings.
 
 
 |           | __Type__ | __Description__  |
