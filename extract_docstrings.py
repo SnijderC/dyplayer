@@ -186,7 +186,7 @@ def print_class_methods(source, enums):
         if len(args[0]):
             # Reverse the order of the argument (name before type) and strip
             # `*` from pointers
-            args = [[y.strip("*"), x] for [x, y] in map(str.split, args)]
+            args = [[y.strip("*[]"), x] for [x, y] in map(str.split, args)]
             # Make a dict of the arguments for eay lookup, this is to match
             # them with the name in the definition later.
             args = dict(args)
@@ -199,19 +199,21 @@ def print_class_methods(source, enums):
         table = ""
         if RE_DEFINITION.search(docstring):
             # If there are, start a table heading.
-            table += "|           | __Type__ | __Description__  |\n"
-            table += "|:----------|:---------|:-----------------|\n"
+            table += "|           | __Type__ | __Name__ | __Description__  |\n"
+            table += "|:----------|:---------|:---------|:-----------------|\n"
         # Iterate over all definitions of param, return and throw.
         for definition in RE_DEFINITION.finditer(docstring):
             # Are we dealing with a param, return or throw?
             def_type = definition.group('definition')
             # The description of the definition is always in the same place
             def_desc = definition.group("description")
-
+            param_name = ""
             if def_type == "param":
                 # Find the corresponding type for the argument name (first word
                 # in the description of the definition).
-                param_type = args[definition.group("name")]
+                param_name = definition.group("name")
+                param_type = args[param_name]
+                param_name = "`%s`" % param_name
                 enum_type = enums.get(param_type)
                 if enum_type:
                     param_type = enum_type["anchor"]
@@ -229,7 +231,12 @@ def print_class_methods(source, enums):
             table += re.sub(
                 "[^|]\n",
                 " ",
-                "| __%s__ | %s | %s |\n" % (def_type, param_type, def_desc)
+                "| __%s__ | %s | %s | %s |\n" % (
+                    def_type,
+                    param_type,
+                    param_name,
+                    def_desc
+                )
             )
         # Output heading, description and definition table.
         print("%s\n\n%s\n\n%s\n" % (heading, description, table))

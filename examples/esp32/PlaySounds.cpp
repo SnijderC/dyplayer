@@ -10,11 +10,12 @@
 DY::Player player(UART_NUM_2, 18, 19);
 
 extern "C" void app_main(void) {
-  vTaskDelay(5000 / portTICK_PERIOD_MS);
+  vTaskDelay(1000 / portTICK_PERIOD_MS);
   player.setVolume(15); // 50% Volume
+
+  ESP_LOGI(TAG, "Sound count: %u", (uint8_t) player.getSoundCount());
+  ESP_LOGI(TAG, "Player device %u", (uint8_t) player.getDeviceOnline());
   while(true) {
-    ESP_LOGI(TAG, "Sound count: %u", (uint8_t) player.getSoundCount());
-    ESP_LOGI(TAG, "Player device %u", (uint8_t) player.getDeviceOnline());
     // Change to next sound after 5 seconds (non-blocking call so will cut off
     // currently playing sound if any).
     for (uint8_t i = 1; i < player.getSoundCount(); i++) {
@@ -22,5 +23,6 @@ extern "C" void app_main(void) {
       ESP_LOGI(TAG, "Playing song %d", player.getPlayingSound());
       vTaskDelay(5000 / portTICK_PERIOD_MS);
     }
+    vTaskDelay(10000 / portTICK_PERIOD_MS);
   }
 }
