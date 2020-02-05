@@ -12,21 +12,14 @@ don't want to have breaking changes.__
 
 # Abstracted UART Control of DY-XXXX mp3 modules
 
-This library abstracts almost all features described in the manual into a C++
-class, except:
+This library abstracts all features described in the manual into a C++ class.
 
-- Combination play (simultaneous sound file playing), the protocol is rather
-  awkward, where most commands require a `uint16_t` and some a path string,
-  this command requires the number as a string, I think. I currently have no use
-  for this feature, you could add it via PR if you do (I would appreciate it).
-  Note that "interlude" should work.
-
-This library also __does not support__ the `ONE_Line` protocol,
+This library __does not support__ the `ONE_Line` protocol,
 [more info](#one_line-support).
 
 Although all features are implemented and should theoretically work, only
 those in the examples directory are tested. Please create an issue if you have
-problems with any of the implemented features.
+problems.
 
 This library was written in a hardware independent way. Which means it should
 work on any device with a serial port, e.g. any Arduino, Espressif, ARM based
@@ -54,8 +47,9 @@ send me a pull request.
 ## Wiring the module
 
 If you have a board with DIP switches, set `CON3` to on, `CON1` and `CON2`
-should remain off. If you have no DIP switches (e.g. `DY-SV17F` board), you have
-to connect 3 resistors of `10KOhm`, one from each `CON#` pin, to:
+should remain off. If your board doesn't have DIP switches (e.g. `DY-SV17F`
+board), you have to connect 3 resistors of `10KOhm`, one from each `CON#` pin,
+to:
 
 | CON pin    | Connect to | Via      |
 |:-----------|:-----------|:---------|

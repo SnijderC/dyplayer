@@ -319,7 +319,7 @@ namespace DY {
        *               play in order.
        * @param len The length of the passed array.
        */
-       void combinationPlay(char *sounds, uint8_t len);
+       void combinationPlay(char *sounds[], uint8_t len);
 
        /**
         * End combination play.
