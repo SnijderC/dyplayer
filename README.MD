@@ -338,9 +338,9 @@ Where:
 Check the current play state can, be called at any time.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __return__ | [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) | Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t) e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __return__ | [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) |  | Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t) e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc  |
 
 
 #### `void` DY::DYPlayer::play(..)
@@ -383,9 +383,9 @@ Play the next file.
 Play a sound file by number, number sent as 2 bytes.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | `uint16_t` | `number` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
 #### `void` DY::DYPlayer::playSpecifiedDevicePath(..)
@@ -398,10 +398,10 @@ more than 36 bytes for your paths. If you require more, check the
 readme, chapter: Memory use.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
-| __param__ | `char` | path pointer to the path of the file (asbsolute)  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | `char` | `path` | path pointer to the path of the file (asbsolute)  |
 
 
 #### [`DY::device_t`](#typedef-enum-class-dydevice_t) DY::DYPlayer::getDeviceOnline(..)
@@ -409,9 +409,9 @@ readme, chapter: Memory use.
 Get the device number the module is currently using.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __return__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __return__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) |  | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`  |
 
 
 #### [`DY::device_t`](#typedef-enum-class-dydevice_t) DY::DYPlayer::getPlayingDevice(..)
@@ -420,9 +420,9 @@ Get the storage device that is currently used for playing sound files.
 
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __return__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH`  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __return__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) |  | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH`  |
 
 
 #### `void` DY::DYPlayer::setPlayingDevice(..)
@@ -432,9 +432,9 @@ Tries to set the device but no guarantee is given, use `getDevice()`
 to check the actual current storage device.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCount(..)
@@ -442,9 +442,9 @@ to check the actual current storage device.
 Get the amount of sound files on the current storage device.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __return__ | `uint16_t` | number of sound files  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __return__ | `uint16_t` |  | number of sound files  |
 
 
 #### `uint16_t` DY::DYPlayer::getPlayingSound(..)
@@ -452,9 +452,9 @@ Get the amount of sound files on the current storage device.
 Get the currently playing file by number.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __return__ | `uint16_t` | number of the file currently playing  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __return__ | `uint16_t` |  | number of the file currently playing  |
 
 
 #### `void` DY::DYPlayer::previousDir(..)
@@ -462,9 +462,9 @@ Get the currently playing file by number.
 Select previous directory and start playing the first or last song.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `playDirSound_t` | song Play DY::PreviousDir::FIRST_SOUND o DY::PreviousDir::LAST_SOUN  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | `playDirSound_t` | `song` | song Play DY::PreviousDir::FIRST_SOUND o DY::PreviousDir::LAST_SOUN  |
 
 
 #### `uint16_t` DY::DYPlayer::getFirstInDir(..)
@@ -472,9 +472,9 @@ Select previous directory and start playing the first or last song.
 Get number of the first song in the currently selected directory.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __return__ | `uint16_t` | number of the first song in the currently selected directory  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __return__ | `uint16_t` |  | number of the first song in the currently selected directory  |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCountDir(..)
@@ -483,9 +483,9 @@ Get the amount of sound files in the currently selected directory.
 NOTE: Excluding files in sub directories.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __return__ | `uint16_t` | number of sound files in currently selected directory  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __return__ | `uint16_t` |  | number of sound files in currently selected directory  |
 
 
 #### `void` DY::DYPlayer::setVolume(..)
@@ -494,9 +494,9 @@ Set the playback volume between 0 and 30.
 Default volume if not set: 20.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint8_t` | volume to set (0-30  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | `uint8_t` | `volume` | volume to set (0-30  |
 
 
 #### `void` DY::DYPlayer::volumeIncrease(..)
@@ -522,10 +522,10 @@ played immediately). When the interlude is finished, it will return to
 the first interlude breakpoint and continue to play.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
-| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | `uint16_t` | `number` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
 #### `void` DY::DYPlayer::interludeSpecifiedDevicePath(..)
@@ -543,10 +543,10 @@ more than 36 bytes for your paths. If you require more, check the
 readme, chapter: Memory use.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
-| __param__ | `char` | path pointer to the path of the file (asbsolute)  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | `char` | `path` | path pointer to the path of the file (asbsolute)  |
 
 
 #### `void` DY::DYPlayer::stopInterlude(..)
@@ -565,9 +565,9 @@ See [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) for modes
 and meaning.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `play_mode_t` | mode The cycle mode to set  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | `play_mode_t` | `mode` | mode The cycle mode to set  |
 
 
 #### `void` DY::DYPlayer::setCycleTimes(..)
@@ -576,9 +576,9 @@ Set how many cycles to play when in cycle modes 0, 1 or 4 (repeat
 modes).
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint16_t` | cycles The cycle count for repeat modes  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | `uint16_t` | `cycles` | cycles The cycle count for repeat modes  |
 
 
 #### `void` DY::DYPlayer::setEq(..)
@@ -587,9 +587,9 @@ Set the equalizer setting.
 See [`DY::eq_t`](#typedef-enum-class-dyeq_t) for settings.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | [`DY::eq_t`](#typedef-enum-class-dyeq_t) | eq The equalizer setting  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | [`DY::eq_t`](#typedef-enum-class-dyeq_t) | `eq` | eq The equalizer setting  |
 
 
 #### `void` DY::DYPlayer::select(..)
@@ -597,9 +597,9 @@ See [`DY::eq_t`](#typedef-enum-class-dyeq_t) for settings.
 Select a sound file without playing it.
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | `uint16_t` | `number` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
 #### `void` DY::DYPlayer::combinationPlay(..)
@@ -621,10 +621,10 @@ DY::DYPlayer::combinationPlay(sounds, 2);
 ````
 
 
-|           | __Type__ | __Description__  |
-|:----------|:---------|:-----------------|
-| __param__ | `char` | sounds An array of char[2] containig the names of sounds t play in order  |
-| __param__ | `uint8_t` | len The length of the passed array  |
+|           | __Type__ | __Name__ | __Description__  |
+|:----------|:---------|:---------|:-----------------|
+| __param__ | `char` | `sounds` | sounds An array of char[2] containig the names of sounds t play in order  |
+| __param__ | `uint8_t` | `len` | len The length of the passed array  |
 
 
 #### `void` DY::DYPlayer::endCombinationPlay(..)
@@ -700,6 +700,9 @@ should work.
 You can also use paths and filenames but neither path nor filename should
 exceed 8 bytes. See the manual of your board for more specifics. If you have any
 problems playing files, please try the simple way before filing issues.
+
+For combination play, you will have to add files with names of 2 bytes plus the
+extension, e.g.: `01.mp3`.
 
 ## ONE_LINE support?
 
