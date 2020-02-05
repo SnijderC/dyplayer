@@ -109,7 +109,7 @@ def parse_enums(source):
             body += enum_fmt % definition
 
         heading_fmt = "%(hlevel)s typedef enum class %(namespace)s::%(enum)s"
-        anchor_title_fmt = "[%(namespace)s::%(enum)s]"
+        anchor_title_fmt = "[`%(namespace)s::%(enum)s`]"
 
         if classname:
             anchor_link_fmt = "(#typedef-enum-class-%(namespace)s%(enum)s)"

@@ -111,7 +111,7 @@ namespace DY {
 
       /**
        * Check the current play state can, be called at any time.
-       * @return Play status: A [DY::PlayState](#typedef-enum-class-dyplaymode_t),
+       * @return Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t),
        *         e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc.
        */
       play_state_t checkPlayState();
@@ -154,7 +154,7 @@ namespace DY {
        * If your directory names are shorter you can use more nesting. Use no
        * more than 36 bytes for your paths. If you require more, check the
        * readme, chapter: Memory use.
-       * @param device A [DY::Device member](#typedef-enum-class-dydevice_t),
+       * @param device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
        *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
        * @param path pointer to the path of the file (asbsolute).
        */
@@ -179,7 +179,7 @@ namespace DY {
        * Set the device number the module should use.
        * Tries to set the device but no guarantee is given, use `getDevice()`
        * to check the actual current storage device.
-       * @param device A [DY::Device member](#typedef-enum-class-dydevice_t),
+       * @param device A [1DY::Device member1](#typedef-enum-class-dydevice_t),
        *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
        */
       void setPlayingDevice(device_t device);
@@ -273,7 +273,7 @@ namespace DY {
 
       /**
        * Sets the cycle mode.
-       * See [play_mode_t](#typedef-enum-dyplaymodet) for modes and meaning.
+       * See [play_mode_t](#typedef-enum-class-dyplaymode_t) for modes and meaning.
        * @param mode The cycle mode to set.
        */
       void setCycleMode(play_mode_t mode);
@@ -287,7 +287,7 @@ namespace DY {
 
       /**
        * Set the equalizer setting.
-       * See [play_mode_t](#typedef-enum-class-dyeq_t) for settings.
+       * See [DY::eq_t](#typedef-enum-class-dyeq_t) for settings.
        * @param eq The equalizer setting.
        */
       void setEq(eq_t eq);
