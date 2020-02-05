@@ -674,11 +674,13 @@ Equalize settings.
 This enum class is based off uint8_t.
 
 
- ## Loading sound files
+## Loading sound files
 
-I recommend you name your files sequentially and put them in the root directory
-of the drive unless you need something more fancy. The numbering should be as
-follows:
+### Normal Playback
+
+For normal playback of sound files, I recommend you name your files
+sequentially and put them in the root directory of the drive unless you need
+something more fancy. The numbering should be as follows:
 
 ```
 00001.mp3
@@ -695,8 +697,15 @@ You can also use paths and filenames but neither path nor filename should
 exceed 8 bytes. See the manual of your board for more specifics. If you have any
 problems playing files, please try the simple way before filing issues.
 
-For combination play, you will have to add files with names of 2 bytes plus the
-extension, e.g.: `01.mp3`.
+### Combination play
+
+For combination play, you will have to add files with names of 2 characters plus
+the extension, e.g.: `01.mp3` into a directory that can be called `DY`, `ZH,
+`XY`, you will have to check
+the manual that came with your module, or try all of them. There may
+well be more combinations! If you find out what the letter combination on your
+board is, please add an issue with the directory name and the module model name,
+so I can add it here to help others.
 
 ## ONE_LINE support?
 

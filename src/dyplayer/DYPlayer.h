@@ -308,7 +308,11 @@ namespace DY {
        * This feature has a particularly curious parameters, you have to
        * specify the sound files by name, they have to be named by 2 numbers
        * and an extension, e.g.: `01.mp3` and specified by `01`. You should
-       * pass them as an array pointer.
+       * pass them as an array pointer. You need to put the files into a
+       * directory that can be called `DY`, `ZH or `XY`, you will have to check
+       * the manual that came with your module, or try all of them. There may
+       * well be more combinations! Also see
+       * [Loading sound files](#loading-sound-files).
        *
        * E.g.
        * ```cpp
