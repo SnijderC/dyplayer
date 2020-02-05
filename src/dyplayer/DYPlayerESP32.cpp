@@ -3,9 +3,11 @@
   serial port on an Arduino board (and which port).
 */
 #ifdef ESP_PLATFORM
+#ifndef ARDUINO
 #include "DYPlayerESP32.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include <esp_log.h>
 //#include "esp_system.h"
 #include "driver/uart.h"
 
@@ -41,14 +43,22 @@ namespace DY {
   void Player::serialWrite(uint8_t *buffer, uint8_t len) {
     // Blocking call, waits for space in hardware FIFO buffer.
     // Commands are short so this shouldn't be an issue.
-    uart_write_bytes(uart_num, (char*)buffer, len);
+    uart_write_bytes(uart_num, (char*) buffer, len);
   }
   bool Player::serialRead(uint8_t *buffer, uint8_t len) {
     int length = 0;
-    while (length < len) {
+    // Retry to get the data from the module for a second, then give up. The
+    // next command should go a usual..
+    uint8_t retry = 100;
+    while (length < len && retry > 0) {
+      ESP_LOGD("RX", "Running, retries: %u", retry);
       // Expected returns values should always fit in the FIFO buffer, they
       // are always just bytes of single digit length.
       ESP_ERROR_CHECK(uart_get_buffered_data_len(uart_num, (size_t*)&length));
+      // Wait 10ms if we didn't get the data yet, usually this happens several
+      // times so could be increased but this way we get it early..
+      vTaskDelay(10 / portTICK_PERIOD_MS);
+      retry--;
     }
     length = uart_read_bytes(uart_num, buffer, length, 10);
     if(length == len) {
@@ -57,4 +67,5 @@ namespace DY {
     return false;
   }
 }
+#endif
 #endif
