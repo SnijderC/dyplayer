@@ -186,7 +186,7 @@ def print_class_methods(source, enums):
         if len(args[0]):
             # Reverse the order of the argument (name before type) and strip
             # `*` from pointers
-            args = [[y.strip("*"), x] for [x, y] in map(str.split, args)]
+            args = [[y.strip("*[]"), x] for [x, y] in map(str.split, args)]
             # Make a dict of the arguments for eay lookup, this is to match
             # them with the name in the definition later.
             args = dict(args)

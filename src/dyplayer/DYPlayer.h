@@ -319,7 +319,7 @@ namespace DY {
        * const char * sounds[2][3] = { "01", "02" };
        * DY::DYPlayer::combinationPlay(sounds, 2);
        * ````
-       * @param sounds An array of char[2] containig the names of sounds to
+       * @param sounds An array of char[2] containing the names of sounds to
        *               play in order.
        * @param len The length of the passed array.
        */

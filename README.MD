@@ -606,10 +606,14 @@ have samples for "fourthy" and "two".
 This feature has a particularly curious parameters, you have to
 specify the sound files by name, they have to be named by 2 numbers
 and an extension, e.g.: `01.mp3` and specified by `01`. You should
-pass them as an array pointer.
+pass them as an array pointer. You need to put the files into a
+directory that can be called `DY`, `ZH or `XY`, you will have to check
+the manual that came with your module, or try all of them. There may
+well be more combinations! Also see
+[Loading sound files](#loading-sound-files).
 
 E.g.
-```
+```cpp
 const char * sounds[2][3] = { "01", "02" };
 DY::DYPlayer::combinationPlay(sounds, 2);
 ````
@@ -617,7 +621,7 @@ DY::DYPlayer::combinationPlay(sounds, 2);
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __param__ | `char` | `sounds` | sounds An array of char[2] containig the names of sounds t play in order  |
+| __param__ | `char` | `sounds` | sounds An array of char[2] containing the names of sounds t play in order  |
 | __param__ | `uint8_t` | `len` | len The length of the passed array  |
 
 
