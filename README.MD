@@ -38,6 +38,7 @@ and [ESP-IDF](#esp-idf), for other boards you will have to
 | DY-HV20T   | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
 | DY-HV8F    | 8Mbit    | No              | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
 | DY-HV20T   | NA       | Yes, Max. 32GB  | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
+| DY-SV5W    | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
 
 NOTE: I cannot guarantee that your board will work with the library. Nor that
 a specific feature will work. I only have the `DY-SV17F` in my possession to
