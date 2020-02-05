@@ -719,7 +719,8 @@ to implement it, we could discuss merging it with this library for convenience.
 - Check the volume control, some boards have a potentiometer you can turn.
 - Check the speaker connection.
 - Test the speaker on another device and see if it is operational.
-- Use the [`DY::DYPlayer::getDeviceOnline`](#devicet-dydyplayergetdeviceonline)
+- Use the
+  [`DY::DYPlayer::getDeviceOnline`](#dydevice_t-dydyplayergetdeviceonline)
   function to see if the device is responsive.
 - See the [loading sound files](#loading-sound-files) chapter and apply the
   simplest file structure to see the wiring etc is correct before filing issues.

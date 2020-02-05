@@ -311,7 +311,7 @@ namespace DY {
        * pass them as an array pointer.
        *
        * E.g.
-       * ```
+       * ```cpp
        * const char * sounds[2][3] = { "01", "02" };
        * DY::DYPlayer::combinationPlay(sounds, 2);
        * ````
