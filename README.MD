@@ -312,8 +312,8 @@ return `0` for sound counts,
 |Cycle mode setting                |`0x18`|[`void` __DY::DYPlayer::setCycleMode__](#void-dydyplayersetcyclemode)|
 |Cycle times setting               |`0x19`|[`void` __DY::DYPlayer::setCycleTimes__](#void-dydyplayersetcycletimes)|
 |Set EQ                            |`0x1a`|[`void` __DY::DYPlayer::SetEq__](#void-dydyplayerseteq)|
-|Combination play setting          |`0x1b`| Not yet implemented |
-|End Combination play              |`0x1c`| Not yet implemented |
+|Combination play setting          |`0x1b`|[`void` __DY::DYPlayer::combinationPlay](#void-dydyplayercombinationplay) |
+|End Combination play              |`0x1c`|[`void` __DY::DYPlayer::endCombintationPlay](#void-dydyplayerendcombinationplay)|
 |Select file but do not play       |`0x1f`|[`void` __DY::DYPlayer::select__](#void-dydyplayerselect)|
 
 UART commands are formed by:
@@ -561,7 +561,7 @@ active.
 #### `void` DY::DYPlayer::setCycleMode(..)
 
 Sets the cycle mode.
-See [1DY::play_state_t1](#typedef-enum-class-dyplay_state_t) for modes
+See [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) for modes
 and meaning.
 
 
@@ -584,7 +584,7 @@ modes).
 #### `void` DY::DYPlayer::setEq(..)
 
 Set the equalizer setting.
-See [1DY::eq_t1](#typedef-enum-class-dyeq_t) for settings.
+See [`DY::eq_t`](#typedef-enum-class-dyeq_t) for settings.
 
 
 |           | __Type__ | __Description__  |
@@ -600,6 +600,38 @@ Select a sound file without playing it.
 |           | __Type__ | __Description__  |
 |:----------|:---------|:-----------------|
 | __param__ | `uint16_t` | number of the file, e.g. `1` for `00001.mp3`  |
+
+
+#### `void` DY::DYPlayer::combinationPlay(..)
+
+Combination play allows you to make a playlist of multiple sound files.
+
+You could use this to combine numbers e.g.: "fourthy-two" where you
+have samples for "fourthy" and "two".
+
+This feature has a particularly curious parameters, you have to
+specify the sound files by name, they have to be named by 2 numbers
+and an extension, e.g.: `01.mp3` and specified by `01`. You should
+pass them as an array pointer.
+
+E.g.
+```
+const char * sounds[2][3] = { "01", "02" };
+DY::DYPlayer::combinationPlay(sounds, 2);
+````
+
+
+|           | __Type__ | __Description__  |
+|:----------|:---------|:-----------------|
+| __param__ | `char` | sounds An array of char[2] containig the names of sounds t play in order  |
+| __param__ | `uint8_t` | len The length of the passed array  |
+
+
+#### `void` DY::DYPlayer::endCombinationPlay(..)
+
+End combination play.
+
+
 
 
 #### typedef enum class DY::device_t

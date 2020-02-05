@@ -273,7 +273,7 @@ namespace DY {
 
       /**
        * Sets the cycle mode.
-       * See [1DY::play_state_t1](#typedef-enum-class-dyplay_state_t) for modes
+       * See [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) for modes
        * and meaning.
        * @param mode The cycle mode to set.
        */
@@ -288,7 +288,7 @@ namespace DY {
 
       /**
        * Set the equalizer setting.
-       * See [1DY::eq_t1](#typedef-enum-class-dyeq_t) for settings.
+       * See [`DY::eq_t`](#typedef-enum-class-dyeq_t) for settings.
        * @param eq The equalizer setting.
        */
       void setEq(eq_t eq);
@@ -299,6 +299,33 @@ namespace DY {
        */
       void select(uint16_t number);
 
+      /**
+       * Combination play allows you to make a playlist of multiple sound files.
+       *
+       * You could use this to combine numbers e.g.: "fourthy-two" where you
+       * have samples for "fourthy" and "two".
+       *
+       * This feature has a particularly curious parameters, you have to
+       * specify the sound files by name, they have to be named by 2 numbers
+       * and an extension, e.g.: `01.mp3` and specified by `01`. You should
+       * pass them as an array pointer.
+       *
+       * E.g.
+       * ```
+       * const char * sounds[2][3] = { "01", "02" };
+       * DY::DYPlayer::combinationPlay(sounds, 2);
+       * ````
+       * @param sounds An array of char[2] containig the names of sounds to
+       *               play in order.
+       * @param len The length of the passed array.
+       */
+       void combinationPlay(char *sounds, uint8_t len);
+
+       /**
+        * End combination play.
+        */
+       void endCombinationPlay();
+
     private:
       /**
        * Calculate the sum of all bytes in a buffer as a simple "CRC".
@@ -306,8 +333,7 @@ namespace DY {
        * @param len of buffer.
        * @return Checksum of the buffer.
        */
-      template <typename T>
-      uint8_t inline checksum(T *data, uint8_t len);
+      uint8_t inline checksum(uint8_t *data, uint8_t len);
 
       /**
        * Validate data buffer with CRC byte (last byte should be the CRC byte).

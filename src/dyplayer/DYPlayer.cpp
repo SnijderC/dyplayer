@@ -16,8 +16,7 @@ namespace DY {
     serialWrite(buffer, 1);
   }
 
-  template <typename T>
-  uint8_t inline DYPlayer::checksum(T *data, uint8_t len) {
+  uint8_t inline DYPlayer::checksum(uint8_t *data, uint8_t len) {
     uint8_t sum = 0;
     for (uint8_t i=0; i < len; i++) {
       sum = sum + data[i];
@@ -268,5 +267,31 @@ namespace DY {
     command[3] = number >> 8;
     command[4] = number & 0xff;
     sendCommand(command, 5);
+  }
+
+  void DYPlayer::combinationPlay(char *sounds, uint8_t len) {
+    if (len < 1) return;
+
+    // This part of the command can be easily determined already.
+    uint8_t command[3] = { 0xaa, 0x1b, 0x00};
+    command[2] = len * 2;
+    // Depends on the length, checksum is a sum so we can add the other values
+    // later.
+    uint8_t crc = checksum(command, 3);
+    // Send the command and length already.
+    serialWrite(command, 3);
+    // Send each pair of chars containing the file name and add the values of
+    // each char to the crc.
+    for (uint8_t i=1; i < len; i++) {
+      crc = crc + checksum((uint8_t*) sounds + i, 2);
+      serialWrite((uint8_t*) sounds + i, 2);
+    }
+    // Lastly, write the crc value.
+    serialWrite(crc);
+  }
+
+  void DYPlayer::endCombinationPlay() {
+    uint8_t command[3] = {0xaa, 0x1c, 0x00};
+    sendCommand(command, 3, 0xc6);
   }
 }
