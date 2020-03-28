@@ -6,7 +6,7 @@
  * There are some virtual methods that MUST be overridden (serialRead and
  * serialWrite) and one that you may override (begin)
  */
-
+#include <ctype.h>
 #include <string.h>
 #include "DYPlayer.h"
 
@@ -80,7 +80,7 @@ namespace DY {
           j++;
           // fall-through
         default:
-          _command[j] = path[i];
+          _command[j] = toupper(path[i]);
       }
       j++;
     }
