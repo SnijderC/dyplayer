@@ -161,11 +161,16 @@ namespace DY {
       void playSpecifiedDevicePath(device_t device, char *path);
 
       /**
+       * NOTE: Commented out because this command returns undocumented values
+       * and it's not clear what this command is supposed to do. You are most
+       * likely looking for
+       * [`DY::Player::getPlayingDevice()`](#dydevice_t-dydyplayergetplayingdevice)
+       * instead.
        * Get the device number the module is currently using.
        * @return device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
        *                e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`.
        */
-      device_t getDeviceOnline();
+      // device_t getDeviceOnline();
 
       /**
        * Get the storage device that is currently used for playing sound files.

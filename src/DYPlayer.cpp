@@ -135,15 +135,15 @@ namespace DY {
     byPathCommand(0x08, device, path);
   }
 
-  device_t DYPlayer::getDeviceOnline() {
-    uint8_t command[3] = { 0xaa, 0x09, 0x00 };
-    sendCommand(command, 3, 0xb3);
-    uint8_t buffer[5];
-    if (getResponse(buffer, 5)) {
-      return (device_t) buffer[3];
-    }
-    return Device::FAIL;
-  }
+  // device_t DYPlayer::getDeviceOnline() {
+  //   uint8_t command[3] = { 0xaa, 0x09, 0x00 };
+  //   sendCommand(command, 3, 0xb3);
+  //   uint8_t buffer[5];
+  //   if (getResponse(buffer, 5)) {
+  //     return (device_t) buffer[3];
+  //   }
+  //   return Device::FAIL;
+  // }
 
   device_t DYPlayer::getPlayingDevice() {
     uint8_t command[3] = { 0xaa, 0x0a, 0x00 };
