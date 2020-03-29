@@ -62,16 +62,19 @@ The 3.3V pin is exposed by the board so you don't need to provide it.
 
 Further make these connections:
 
-| Pin      | Connect to                       |
-|:---------|:---------------------------------|
-| `V?`     | `V+` (voltage depends on module) |
-| `GND`    | `GND`                            |
-| `IO0/TX` | `MCU RX`                         |
-| `IO1/RX` | `MCU TX`                         |
-| `SPK+`   | Speaker positive lead            |
-| `SPK-`   | Speaker negative lead            |
+| Pin      | Connect to                       | Via                         |
+|:---------|:---------------------------------|:----------------------------|
+| `V?`     | `V+` (voltage depends on module) |                             |
+| `GND`    | `GND`                            |                             |
+| `IO0/TX` | `MCU RX`                         | `1KOhm` if using a 5V board |
+| `IO1/RX` | `MCU TX`                         | `1KOhm` if using a 5V board |
+| `SPK+`   | Speaker positive lead            |                             |
+| `SPK-`   | Speaker negative lead            |                             |
 
 `MCU` should be your board or microprocessor, e.g. an Arduino board.
+
+Note the logic levels should be 3.3V or at least limited by a `1KOhm`
+resistor according to the module manual, or you could damage the module.
 
 ## HAL
 
