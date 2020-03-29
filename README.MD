@@ -289,7 +289,6 @@ return `0` for sound counts,
 |Next music                        |`0x06`|[`void` __DY::DYPlayer::next__](#void-dydyplayernext)|
 |Play specified music              |`0x07`|[`void` __DY::DYPlayer::playSpecified__](#void-dydyplayerplayspecified)|
 |Specified device and path play    |`0x08`|[`void` __DY::DYPlayer::playSpecifiedDevicePath__](#void-dydyplayerplayspecifieddevicepath)|
-|Check Device Online               |`0x09`|[`DY::Device::device_t` __DY::DYPlayer::getDeviceOnline__](#dydevice_t-dydyplayergetdeviceonline)|
 |Check Current Playing Device      |`0x0a`|[`DY::Device::device_t` __DY::DYPlayer::getPlayingDevice__](#dydevice_t-dydyplayergetplayingdevice)|
 |Switch to selected device         |`0x0b`|[`void` __DY::DYPlayer::setPlayingDevice__](#void-dydyplayersetplayingdevice)|
 |Check Number Of all Music         |`0x0c`|[`uint16_t` __DY::DYPlayer::getSoundCount__](#uint16_t-dydyplayergetsoundcount)|
@@ -718,7 +717,7 @@ to implement it, we could discuss merging it with this library for convenience.
 - Check the speaker connection.
 - Test the speaker on another device and see if it is operational.
 - Use the
-  [`DY::DYPlayer::getDeviceOnline`](#dydevice_t-dydyplayergetdeviceonline)
+  [`DY::DYPlayer::getPlayingDevice`](#dydevice_t-dydyplayergetplayingdevice)
   function to see if the device is responsive.
 - See the [loading sound files](#loading-sound-files) chapter and apply the
   simplest file structure to see the wiring etc is correct before filing issues.
