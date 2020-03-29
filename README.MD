@@ -144,7 +144,7 @@ Steps:
 ## Memory use
 
 This library uses a little memory as possible to play nice with micro
-controllers with small RAM, such as Atmega238 (used in many Arduino boards),
+controllers with small RAM, such as Atmega328 (used in many Arduino boards),
 which has 2K RAM.
 
 To keep memory usage low, avoid using the functions that take `char *path`
