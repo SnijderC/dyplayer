@@ -7,7 +7,7 @@ is too much, others aren't mature, neither is this, but it's simple.
 
 import re
 
-INPUT_FILE = "src/dyplayer/DYPlayer.h"
+INPUT_FILE = "src/DYPlayer.h"
 HEADING_LEVEL = 4
 NAMESPACE = "DY"
 CLASSNAME = "DYPlayer"

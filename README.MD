@@ -399,16 +399,6 @@ readme, chapter: Memory use.
 | __param__ | `char` | `path` | path pointer to the path of the file (asbsolute)  |
 
 
-#### [`DY::device_t`](#typedef-enum-class-dydevice_t) DY::DYPlayer::getDeviceOnline(..)
-
-Get the device number the module is currently using.
-
-
-|           | __Type__ | __Name__ | __Description__  |
-|:----------|:---------|:---------|:-----------------|
-| __return__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) |  | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`  |
-
-
 #### [`DY::device_t`](#typedef-enum-class-dydevice_t) DY::DYPlayer::getPlayingDevice(..)
 
 Get the storage device that is currently used for playing sound files.
