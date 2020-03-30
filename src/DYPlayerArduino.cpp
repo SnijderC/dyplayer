@@ -10,10 +10,19 @@ namespace DY {
     this->port = &Serial;
   }
   Player::Player(HardwareSerial* port) {
-    this->port = port;
+    this->port = (Stream*)port;
+    this->isSoftSerial = false;
+  }
+  Player::Player(SoftwareSerial* port) {
+    this->port = (Stream*)port;
+    this->isSoftSerial = true;
   }
   void Player::begin() {
-    port->begin(9600);
+    if (isSoftSerial) {
+      ((SoftwareSerial*)port)->begin(9600);
+    } else {
+      ((HardwareSerial*)port)->begin(9600);
+    }
   }
   void Player::serialWrite(uint8_t *buffer, uint8_t len) {
     port->write(buffer, len);
