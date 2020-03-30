@@ -13,7 +13,7 @@ DY::Player player;
 // Alternatively On boards with more than one serial port initialise on another
 // serial port. You will have a Serial port free for debugging, uncomment the
 // lines in the loop below too!
-// Player player(&Serial2);
+// DY::Player player(&Serial2);
 
 void setup() {
   player.begin();

@@ -5,7 +5,7 @@
 DY::Player player;
 
 // Alternatively initialise on another serial port.
-// Player player(&Serial2);
+// DY::Player player(&Serial2);
 
 void setup() {
   player.begin();
