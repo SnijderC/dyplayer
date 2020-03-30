@@ -86,8 +86,8 @@ If you are using ESP-IDF, skip this chapter and go to [ESP-IDF](#esp-idf).
 
 Because the library is hardware independent you might need to add a Hardware
 Abstraction Layer (HAL) which sets up the serial port and that implements a
-minimum of 2 functions `serialWrite()` and `serialRead()`, this is the included
-Arduino example:
+minimum of 2 functions `serialWrite()` and `serialRead()`, there is a HAL for
+Arduino included, here's a __simplified__ version of it:
 
 ``` C++
 // player.hpp
@@ -133,6 +133,12 @@ namespace DY {
 }
 
 ```
+
+__Note:__
+*This Arduino HAL is simplied, the included HAL does `SoftwareSerial`
+as well which adds some complexity that I don't think should be in an example
+like this. You can find the real HAL [here](src/DYPlayerArduino.cpp).*
+
 
 Steps:
 
@@ -234,7 +240,7 @@ You may use any Serial port on the board, you will have to pass it to the
 DY::Player player(&Serial2);
 ```
 
-To use the Arduino HAL see
+To find out how to use the Arduino HAL see
 [PlaySoundByNumber.ino](examples/PlaySoundByNumber/PlaySoundByNumber.ino).
 
 ## ESP-IDF
