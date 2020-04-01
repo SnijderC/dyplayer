@@ -683,7 +683,7 @@ something more fancy. The numbering should be as follows:
 
 #### Important: files do not play in order of named sequence
 
-The [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified)
+The [`DY::DYPlayer::playSpecified`](#void-dydyplayerplayspecified)
 function will __not__ necessarily play the sound file named `00001.MP3` when
 asked to play sound file `1`. The module will look for the first sound file
 found in the filesystem. It's not using the file name, neither does it order by
@@ -696,7 +696,7 @@ file name. To be sure the sound files play in the expected order:
    copied in sequence order.
 
 Please don't file bugs stating there is a bug in the
-[`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) function
+[`DY::DYPlayer::playSpecified`](#void-dydyplayerplayspecified) function
 because `00001.MP3` doesn't play when `1` is sent to the module. It's not a bug
 in this library, it's how the module works. If you find that the above
 information is not correct, or if you have suggestions for improvements, please
@@ -754,7 +754,7 @@ to implement it, we could discuss merging it with this library for convenience.
   prevent data from being received.
 - Check there are compatible sound files on the modules storage device, maybe
   it's connecting, but doesn't have a sound to play, use
-  [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) to play
+  [`DY::DYPlayer::playSpecified`](#void-dydyplayerplayspecified) to play
   sound file `00001.MP3` because it's more fault tolerant than by path
   functions.
 
@@ -770,7 +770,7 @@ to implement it, we could discuss merging it with this library for convenience.
   simplest file structure to see the wiring etc is correct before filing issues.
 - Check there are compatible sound files on the modules storage device maybe
   it doesn't have a sound to play, use
-  [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) to play
+  [`DY::DYPlayer::playSpecified`](#void-dydyplayerplayspecified) to play
   sound file `00001.MP3` because it's more fault tolerant than by path
   functions.
 
