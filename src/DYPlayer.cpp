@@ -97,7 +97,7 @@ namespace DY {
     if (getResponse(buffer, 6)) {
       return (play_state_t) buffer[3];
     }
-    return PlayState::FAIL;
+    return PlayState::Fail;
   }
 
   void DYPlayer::play() {
@@ -142,7 +142,7 @@ namespace DY {
   //   if (getResponse(buffer, 5)) {
   //     return (device_t) buffer[3];
   //   }
-  //   return Device::FAIL;
+  //   return Device::Fail;
   // }
 
   device_t DYPlayer::getPlayingDevice() {
@@ -152,7 +152,7 @@ namespace DY {
     if (getResponse(buffer, 5)) {
       return (device_t)buffer[3];
     }
-    return Device::FAIL;
+    return Device::Fail;
   }
 
   void DYPlayer::setPlayingDevice(device_t device) {
@@ -182,7 +182,7 @@ namespace DY {
   }
 
   void DYPlayer::previousDir (playDirSound_t song) {
-    if (song == LAST_SOUND) {
+    if (song == PreviousDir::LastSound) {
       uint8_t command[3] = { 0xaa, 0x0e, 0x00 };
       sendCommand(command, 3, 0xb8);
     } else {

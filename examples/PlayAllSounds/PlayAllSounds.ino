@@ -11,8 +11,8 @@ void setup() {
   player.begin();
   player.setVolume(15); // 50% Volume
   // Pick one of these..
-  // player.setCycleMode(DY::PlayMode::SEQUENCE); // Play all and stop.
-  player.setCycleMode(DY::PlayMode::REPEAT); // Play all and repeat.
+  // player.setCycleMode(DY::PlayMode::Sequence); // Play all and stop.
+  player.setCycleMode(DY::PlayMode::Repeat); // Play all and repeat.
   player.play();
 }
 

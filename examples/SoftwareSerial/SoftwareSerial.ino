@@ -12,7 +12,7 @@ void setup() {
   // to the console..
   Serial.begin(9600);
   player.setVolume(15); // 50% Volume
-  player.setCycleMode(DY::PlayMode::REPEAT); // Play all and repeat.
+  player.setCycleMode(DY::PlayMode::Repeat); // Play all and repeat.
   player.play();
 }
 

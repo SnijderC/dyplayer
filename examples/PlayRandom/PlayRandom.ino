@@ -10,7 +10,7 @@ DY::Player player;
 void setup() {
   player.begin();
   player.setVolume(15); // 50% Volume
-  player.setCycleMode(DY::PlayMode::RANDOM); // Play all randomly and repeat.
+  player.setCycleMode(DY::PlayMode::Random); // Play all randomly and repeat.
   player.play();
 }
 
