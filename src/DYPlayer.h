@@ -18,12 +18,11 @@ namespace DY {
    * storage device.
    */
   typedef enum class Device: uint8_t {
-    USB       = 0x00, // USB Storage device.
-    SD        = 0x01, // SD Card.
-    FLASH     = 0x02, // Onboard flash chip (usually winbond 32, 64Mbit flash).
-    DUNNO     = 0x04, // Some boards report this as the online storage device..
-    FAIL      = 0xfe, // UART failure, can't be `-1` (so this can be uint8_t).
-    NO_DEVICE = 0xff  // No storage device is online.
+    Usb       = 0x00, // USB Storage device.
+    Sd        = 0x01, // SD Card.
+    Flash     = 0x02, // Onboard flash chip (usually winbond 32, 64Mbit flash).
+    Fail      = 0xfe, // UART failure, can't be `-1` (so this can be uint8_t).
+    NoDevice = 0xff  // No storage device is online.
    } device_t;
 
 
@@ -32,21 +31,21 @@ namespace DY {
    * The current module play state.
    */
   typedef enum class PlayState: int8_t {
-    FAIL      = -1, // UART Failure, can be a connection or a CRC problem.
-    STOPPED   = 0,
-    PLAYING   = 1,
-    PAUSED    = 2
+    Fail      = -1, // UART Failure, can be a connection or a CRC problem.
+    Stopped   = 0,
+    Playing   = 1,
+    Paused    = 2
   } play_state_t;
 
   /**
    * Equalize settings.
    */
   typedef enum class Eq: uint8_t {
-    NORMAL,
-    POP,
-    ROCK,
-    JAZZ,
-    CLASSIC
+    Normal,
+    Pop,
+    Rock,
+    Jazz,
+    Classic
   } eq_t;
 
   /**
@@ -54,21 +53,21 @@ namespace DY {
    * i.e.:
    * Repeat 1, Repeat all, Repeat list (dir), playlist (by dir), random play.
    *
-   * The default is perhaps somewhat unexpected: DY::PlayMode::ONE_OFF. Often
+   * The default is perhaps somewhat unexpected: `DY::PlayMode::OneOff`. Often
    * these modules will be used in toys or information displays where you can
    * press a button and hear a corresponding sound. To get default media player
-   * behaviour, you should probably set DY::PlayMode::SEQUENCE to just continue
+   * behaviour, you should probably set `DY::PlayMode::Sequence` to just continue
    * playing the next song until all are played or skipped, then stop.
    */
   typedef enum PlayMode: uint8_t {
-    REPEAT,       // Play all music in sequence, and repeat.
-    REPEAT_ONE,   // Repeat current sound.
-    ONE_OFF,      // Play sound file and stop.
-    RANDOM,       // Play random sound file.
-    REPEAT_DIR,   // Repeat current directory.
-    RANDOM_DIR,   // Play random sound file in current folder.
-    SEQUENCE_DIR, // Play all sound files in current folder in sequence, and stop.
-    SEQUENCE      // Play all sound files on device in sequence, and stop.
+    Repeat,       // Play all music in sequence, and repeat.
+    RepeatOne,   // Repeat current sound.
+    OneOff,      // Play sound file and stop.
+    Random,       // Play random sound file.
+    RepeatDir,   // Repeat current directory.
+    RandomDir,   // Play random sound file in current folder.
+    SequenceDir, // Play all sound files in current folder in sequence, and stop.
+    Sequence      // Play all sound files on device in sequence, and stop.
   } play_mode_t;
 
   /**
@@ -80,8 +79,8 @@ namespace DY {
    * go to the previous directory.
    */
   typedef enum PreviousDir: uint8_t {
-    FIRST_SOUND, // When navigating to the previous dir, play the first sound.
-    LAST_SOUND   // When navigating to the previous dir, play the last sound.
+    FirstSound, // When navigating to the previous dir, play the first sound.
+    LastSound   // When navigating to the previous dir, play the last sound.
   } playDirSound_t;
 
   class DYPlayer {
@@ -112,7 +111,7 @@ namespace DY {
       /**
        * Check the current play state can, be called at any time.
        * @return Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t),
-       *         e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc.
+       *         e.g DY::PlayMode::Stopped, DY::PlayMode::Playing, etc.
        */
       play_state_t checkPlayState();
 
@@ -132,7 +131,7 @@ namespace DY {
       void stop();
 
       /**
-       * Play the preivous file.
+       * Play the previous file.
        */
       void previous();
 
@@ -155,7 +154,7 @@ namespace DY {
        * more than 36 bytes for your paths. If you require more, check the
        * readme, chapter: Memory use.
        * @param device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
-       *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
+       *               e.g  `DY::Device::Flash` or `DY::Device::Sd`.
        * @param path pointer to the path of the file (asbsolute).
        */
       void playSpecifiedDevicePath(device_t device, char *path);
@@ -167,16 +166,16 @@ namespace DY {
        * [`DY::Player::getPlayingDevice()`](#dydevice_t-dydyplayergetplayingdevice)
        * instead.
        * Get the device number the module is currently using.
-       * @return device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
-       *                e.g  `DY::Device::FLASH` or `DY::Device::NO_DEVICE`.
+       * @return a [`DY::Device` member](#typedef-enum-class-dydevice_t),
+       *         e.g  `DY::Device::Flash` or `DY::Device::Sd`.
        */
       // device_t getDeviceOnline();
 
       /**
        * Get the storage device that is currently used for playing sound files.
        *
-       * @return device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
-       *                e.g  `DY::Device::FLASH`.
+       * @return a [`DY::Device` member](#typedef-enum-class-dydevice_t),
+       *         e.g  `DY::Device::Flash` or `DY::Device::Sd`.
        */
       device_t getPlayingDevice();
 
@@ -184,8 +183,8 @@ namespace DY {
        * Set the device number the module should use.
        * Tries to set the device but no guarantee is given, use `getDevice()`
        * to check the actual current storage device.
-       * @param device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
-       *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
+       * @param device A [`DY::Device` member](#typedef-enum-class-dydevice_t),
+       *               e.g  `DY::Device::Flash` or `DY::Device::Sd`.
        */
       void setPlayingDevice(device_t device);
 
@@ -203,8 +202,8 @@ namespace DY {
 
       /**
        * Select previous directory and start playing the first or last song.
-       * @param song Play DY::PreviousDir::FIRST_SOUND or
-       *             DY::PreviousDir::LAST_SOUND
+       * @param song Play `DY::PreviousDir::FirstSound` or
+       *             DY::PreviousDir::LastSound
        */
       void previousDir(playDirSound_t song);
 
@@ -245,7 +244,7 @@ namespace DY {
        * played immediately). When the interlude is finished, it will return to
        * the first interlude breakpoint and continue to play.
        * @param device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
-       *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
+       *               e.g  `DY::Device::Flash` or `DY::Device::Sd`.
        * @param number of the file, e.g. `1` for `00001.mp3`.
        */
       void interludeSpecified(device_t device, uint16_t number);
@@ -263,7 +262,7 @@ namespace DY {
        * more than 36 bytes for your paths. If you require more, check the
        * readme, chapter: Memory use.
        * @param device A [`DY::Device member`](#typedef-enum-class-dydevice_t),
-       *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
+       *               e.g  `DY::Device::Flash` or `DY::Device::Sd`.
        * @param path pointer to the path of the file (asbsolute).
        */
       void interludeSpecifiedDevicePath(device_t device, char *path);
@@ -389,7 +388,7 @@ namespace DY {
      * comment.
      * @param command The command to send.
      * @param device A [DY::Device member](#typedef-enum-class-dydevice_t),
-     *               e.g  `DY::Device::FLASH` or `DY::Device::SD`.
+     *               e.g  `DY::Device::Flash` or `DY::Device::Sd`.
      * @param path of the file (asbsolute).
      */
     void byPathCommand(uint8_t command, device_t device, char *path);

@@ -17,6 +17,28 @@ There are Hardware Abstraction Layers (HAL) included for [Arduino](#arduino)
 and [ESP-IDF](#esp-idf), for other boards you will have to
 [provide one yourself](#hal) (PR is welcome!).
 
+## Note on upgrading from version 3.x.x to version 4.x.x
+
+__TL;DR:__ Change all occurances of enum constants of `DY::Device`,
+`DY::PlayState`, `DY::Eq`, `DY::PlayMode` and `DY::PreviousDir` from upper case
+to CamelCase, e.g.: `DY::Device::FLASH` to `DY::Device::Flash`.
+
+One of the problems with C++ I learned about, the hard way is how the namespace
+can still be polluted despite namespacing everything. As macro's are handled by
+the preprocessor, any mention of a macro in the source, even if obviously
+intended as code (well to a human) will be interpreted as a call to a macro.
+
+Embedded devices' headers rely on macro's heavily and they aren't generally
+prefixed. So users reported collisions between constants such as `USB` (it's
+actually part of an enum class: `DY::Device::USB` which makes this even more
+frustrating) and a macro defined for a board that has a USB port, also named
+`USB`.
+
+The only way around it is to drop the social convention (that was arguably
+already advised against) of naming constants in capitals, the compiler
+doesn't care about this convention, it's just usually done for readability.
+
+
 ## Modules should work (not exhaustive)
 
 | Model name | Capacity | SD Card support | Amplifier       | Voltage | Tested |
@@ -331,7 +353,7 @@ Check the current play state can, be called at any time.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __return__ | [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) |  | Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t) e.g DY::PlayMode::STOPPED, DY::PlayMode::PLAYING, etc  |
+| __return__ | [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) |  | Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t) e.g DY::PlayMode::Stopped, DY::PlayMode::Playing, etc  |
 
 
 #### `void` DY::DYPlayer::play(..)
@@ -391,7 +413,7 @@ readme, chapter: Memory use.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::Flash` or `DY::Device::Sd`  |
 | __param__ | `char` | `path` | path pointer to the path of the file (asbsolute)  |
 
 
@@ -403,7 +425,7 @@ Get the storage device that is currently used for playing sound files.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __return__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) |  | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH`  |
+| __return__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) |  | a [`DY::Device` member](#typedef-enum-class-dydevice_t) e.g  `DY::Device::Flash` or `DY::Device::Sd`  |
 
 
 #### `void` DY::DYPlayer::setPlayingDevice(..)
@@ -415,7 +437,7 @@ to check the actual current storage device.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device` member](#typedef-enum-class-dydevice_t) e.g  `DY::Device::Flash` or `DY::Device::Sd`  |
 
 
 #### `uint16_t` DY::DYPlayer::getSoundCount(..)
@@ -445,7 +467,7 @@ Select previous directory and start playing the first or last song.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __param__ | `playDirSound_t` | `song` | song Play DY::PreviousDir::FIRST_SOUND o DY::PreviousDir::LAST_SOUN  |
+| __param__ | `playDirSound_t` | `song` | song Play `DY::PreviousDir::FirstSound` o DY::PreviousDir::LastSoun  |
 
 
 #### `uint16_t` DY::DYPlayer::getFirstInDir(..)
@@ -505,7 +527,7 @@ the first interlude breakpoint and continue to play.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::Flash` or `DY::Device::Sd`  |
 | __param__ | `uint16_t` | `number` | number of the file, e.g. `1` for `00001.mp3`  |
 
 
@@ -526,7 +548,7 @@ readme, chapter: Memory use.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::FLASH` or `DY::Device::SD`  |
+| __param__ | [`DY::device_t`](#typedef-enum-class-dydevice_t) | `device` | device A [`DY::Device member`](#typedef-enum-class-dydevice_t) e.g  `DY::Device::Flash` or `DY::Device::Sd`  |
 | __param__ | `char` | `path` | path pointer to the path of the file (asbsolute)  |
 
 
@@ -626,12 +648,11 @@ storage device.
 
 | const | value | description |
 |:------|:------|:------------|
-| `DY::Device::USB` | `0x00` | USB Storage device. |
-| `DY::Device::SD` | `0x01` | SD Card. |
-| `DY::Device::FLASH` | `0x02` | Onboard flash chip (usually winbond 32, 64Mbit flash). |
-| `DY::Device::DUNNO` | `0x04` | Some boards report this as the online storage device.. |
-| `DY::Device::FAIL` | `0xfe` | UART failure, can't be `-1` (so this can be uint8_t). |
-| `DY::Device::NO_DEVICE` | `0xff` | No storage device is online. |
+| `DY::Device::Usb` | `0x00` | USB Storage device. |
+| `DY::Device::Sd` | `0x01` | SD Card. |
+| `DY::Device::Flash` | `0x02` | Onboard flash chip (usually winbond 32, 64Mbit flash). |
+| `DY::Device::Fail` | `0xfe` | UART failure, can't be `-1` (so this can be uint8_t). |
+| `DY::Device::NoDevice` | `0xff` | No storage device is online. |
 
 This enum class is based off uint8_t.
 
@@ -642,10 +663,10 @@ The current module play state.
 
 | const | value | description |
 |:------|:------|:------------|
-| `DY::PlayState::FAIL` | `-1` | UART Failure, can be a connection or a CRC problem. |
-| `DY::PlayState::STOPPED` | `0` |  |
-| `DY::PlayState::PLAYING` | `1` |  |
-| `DY::PlayState::PAUSED` | `2` |  |
+| `DY::PlayState::Fail` | `-1` | UART Failure, can be a connection or a CRC problem. |
+| `DY::PlayState::Stopped` | `0` |  |
+| `DY::PlayState::Playing` | `1` |  |
+| `DY::PlayState::Paused` | `2` |  |
 
 This enum class is based off int8_t.
 
@@ -656,13 +677,14 @@ Equalize settings.
 
 | const | value |
 |:------|:------|
-| `DY::Eq::NORMAL` | `0x00` |
-| `DY::Eq::POP` | `0x01` |
-| `DY::Eq::ROCK` | `0x02` |
-| `DY::Eq::JAZZ` | `0x03` |
-| `DY::Eq::CLASSIC` | `0x04` |
+| `DY::Eq::Normal` | `0x00` |
+| `DY::Eq::Pop` | `0x01` |
+| `DY::Eq::Rock` | `0x02` |
+| `DY::Eq::Jazz` | `0x03` |
+| `DY::Eq::Classic` | `0x04` |
 
 This enum class is based off uint8_t.
+
 
 
 ## Loading sound files

@@ -13,16 +13,22 @@ namespace DY {
     this->port = (Stream*)port;
     this->isSoftSerial = false;
   }
+  #ifdef __AVR__
   Player::Player(SoftwareSerial* port) {
     this->port = (Stream*)port;
     this->isSoftSerial = true;
   }
+  #endif
   void Player::begin() {
+    #ifdef __AVR__
     if (isSoftSerial) {
       ((SoftwareSerial*)port)->begin(9600);
     } else {
       ((HardwareSerial*)port)->begin(9600);
     }
+    #else
+    ((HardwareSerial*)port)->begin(9600);
+    #endif
   }
   void Player::serialWrite(uint8_t *buffer, uint8_t len) {
     port->write(buffer, len);
