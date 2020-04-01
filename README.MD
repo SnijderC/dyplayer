@@ -703,22 +703,45 @@ something more fancy. The numbering should be as follows:
 65535.mp3
 ```
 
-That way the simplest functions that allow you to play a sound by `uint16_t`
-should work.
+#### Important: files do not play in order of named sequence
 
-You can also use paths and filenames but neither path nor filename should
-exceed 8 bytes. See the manual of your board for more specifics. If you have any
-problems playing files, please try the simple way before filing issues.
+The [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified)
+function will __not__ necessarily play the sound file named `00001.MP3` when
+asked to play sound file `1`. The module will look for the first sound file
+found in the filesystem. It's not using the file name, neither does it order by
+file name. To be sure the sound files play in the expected order:
+
+1. Empty the storage device.
+2. Make sure there aren't any trash files on the storage device.
+3. Copy the files in the order they should be played (it helps to have them
+   named sequentially, sort by name and copy the files, usually they will be
+   copied in sequence order.
+
+#### By file path
+
+You can also use paths and filenames but neither directory nor filename should
+exceed 8 bytes. You can put the files in directories, but don't make a lot of
+nested directories. Files in the root are played by specifying the path as
+`/00001.MP3` (note the `/`).
+
+#### Use normal paths
+
+In the module's manual you can find that paths are required to be separated by
+`*/` and `*` in place of `.`, upper case characters, etc., etc. Forget about
+all of that, just supply paths as you are used to, case insensitive, no funny
+character substitutions. The library will handle the required conversions.
 
 ### Combination play
 
 For combination play, you will have to add files with names of 2 characters plus
-the extension, e.g.: `01.mp3` into a directory that can be called `DY`, `ZH,
-`XY`, you will have to check
-the manual that came with your module, or try all of them. There may
-well be more combinations! If you find out what the letter combination on your
-board is, please add an issue with the directory name and the module model name,
-so I can add it here to help others.
+the extension, e.g.: `01.mp3` into a directory that can be called `XY`, `ZH,
+`DY`, you will have to check the manual that came with your module, or try all
+of them. There may well be more options! Most manuals claim it should be `DY`
+but most people reported that `XY` actually works, so try: `/DY/##.MP3` first.
+
+If you find out what the letter combination on your board is, please add an
+issue with the directory name and the module model name, so I can add it here
+to help others.
 
 ## ONE_LINE support?
 
@@ -730,13 +753,37 @@ to implement it, we could discuss merging it with this library for convenience.
 
 ## Troubleshooting
 
+### No communication with the board
+
+- Check power is supplied to the module.
+- Check that TX on your Arduino board connects to RX on the module and vice
+  versa, check that you connected the serial lines through resistors if your
+  Arduino runs on 5V. See [Wiring the module](#wiring-the-module).
+- Check the configuration of the board, either by connecting the correct value
+  of resistors to the correct `CON#` pins or, if your board has them, the DIP
+  switches are set to the correct value. See
+  [Wiring the module](#wiring-the-module).
+- If you share the serial port between the computer for flashing and connecting
+  to the module, disconnect the cable (FTDI or USB cable) from the board before
+  booting it. Anything on the module TX line besides your Arduino board will
+  prevent data from being received.
+- Check there are compatible sound files on the modules storage device, maybe
+  it's connecting, but doesn't have a sound to play, use
+  [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) to play
+  sound file `00001.MP3` because it's more fault tolerant than by path
+  functions.
 ### No sound
 
-- Check the volume control, some boards have a potentiometer you can turn.
 - Check the speaker connection.
+- Check the volume control, some boards have a potentiometer you can turn.
 - Test the speaker on another device and see if it is operational.
 - Use the
   [`DY::DYPlayer::getPlayingDevice`](#dydevice_t-dydyplayergetplayingdevice)
   function to see if the device is responsive.
 - See the [loading sound files](#loading-sound-files) chapter and apply the
   simplest file structure to see the wiring etc is correct before filing issues.
+- Check there are compatible sound files on the modules storage device maybe
+  it doesn't have a sound to play, use
+  [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) to play
+  sound file `00001.MP3` because it's more fault tolerant than by path
+  functions.
