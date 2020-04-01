@@ -1,15 +1,3 @@
-# NOTE: Use the release branch README
-
-Always reference the
-[README.MD](https://github.com/SnijderC/dyplayer/blob/release/README.MD) in the
-[`release`](https://github.com/SnijderC/dyplayer/tree/release) branch as a
-source of documentation if you download the library through
-[platform.io](https://platformio.org).
-
-__Library has and probably will be under heavy development for a while. The API
-could still change significantly. Stick with your major version number if you
-don't want to have breaking changes.__
-
 # Abstracted UART Control of DY-XXXX mp3 modules
 
 This library abstracts all features described in the manual into a C++ class.
@@ -29,16 +17,38 @@ There are Hardware Abstraction Layers (HAL) included for [Arduino](#arduino)
 and [ESP-IDF](#esp-idf), for other boards you will have to
 [provide one yourself](#hal) (PR is welcome!).
 
+## Note on upgrading from version 3.x.x to version 4.x.x
+
+__TL;DR:__ Change all occurances of enum constants of `DY::Device`,
+`DY::PlayState`, `DY::Eq`, `DY::PlayMode` and `DY::PreviousDir` from upper case
+to CamelCase, e.g.: `DY::Device::FLASH` to `DY::Device::Flash`.
+
+One of the problems with C++ I learned about, the hard way is how the namespace
+can still be polluted despite namespacing everything. As macro's are handled by
+the preprocessor, any mention of a macro in the source, even if obviously
+intended as code (well to a human) will be interpreted as a call to a macro.
+
+Embedded devices' headers rely on macro's heavily and they aren't generally
+prefixed. So users reported collisions between constants such as `USB` (it's
+actually part of an enum class: `DY::Device::USB` which makes this even more
+frustrating) and a macro defined for a board that has a USB port, also named
+`USB`.
+
+The only way around it is to drop the social convention (that was arguably
+already advised against) of naming constants in capitals, the compiler
+doesn't care about this convention, it's just usually done for readability.
+
+
 ## Modules should work (not exhaustive)
 
 | Model name | Capacity | SD Card support | Amplifier       | Voltage | Tested |
 |:-----------|:---------|:---------------:|:----------------|:-------:|:------:|
-| DY-SV17F   | 32Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | Yes    |
+| DY-SV17F   | 32Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | __Yes__|
 | DY-SV8F    | 64Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
 | DY-HV20T   | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
 | DY-HV8F    | 8Mbit    | No              | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
 | DY-HV20T   | NA       | Yes, Max. 32GB  | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
-| DY-SV5W    | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
+| DY-SV5W    | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | __Yes__|
 
 NOTE: I cannot guarantee that your board will work with the library. Nor that
 a specific feature will work. I only have the `DY-SV17F` in my possession to
