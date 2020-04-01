@@ -717,6 +717,13 @@ file name. To be sure the sound files play in the expected order:
    named sequentially, sort by name and copy the files, usually they will be
    copied in sequence order.
 
+Please don't file bugs stating there is a bug in the
+[`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) function
+because `00001.MP3` doesn't play when `1` is sent to the module. It's not a bug
+in this library, it's how the module works. If you find that the above
+information is not correct, or if you have suggestions for improvements, please
+do create an issue..
+
 #### By file path
 
 You can also use paths and filenames but neither directory nor filename should
@@ -772,6 +779,7 @@ to implement it, we could discuss merging it with this library for convenience.
   [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) to play
   sound file `00001.MP3` because it's more fault tolerant than by path
   functions.
+
 ### No sound
 
 - Check the speaker connection.
@@ -787,3 +795,9 @@ to implement it, we could discuss merging it with this library for convenience.
   [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) to play
   sound file `00001.MP3` because it's more fault tolerant than by path
   functions.
+
+### Unexpected behaviour
+
+- I asked the module to play `1` but `00001.MP3` is not played, I hear a
+  different sound. This is not a bug in this library, check:
+  [Important: files do not play in order of named sequence](#important-files-do-not-play-in-order-of-named-sequence)
