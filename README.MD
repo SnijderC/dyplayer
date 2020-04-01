@@ -1,15 +1,3 @@
-# NOTE: Use the release branch README
-
-Always reference the
-[README.MD](https://github.com/SnijderC/dyplayer/blob/release/README.MD) in the
-[`release`](https://github.com/SnijderC/dyplayer/tree/release) branch as a
-source of documentation if you download the library through
-[platform.io](https://platformio.org).
-
-__Library has and probably will be under heavy development for a while. The API
-could still change significantly. Stick with your major version number if you
-don't want to have breaking changes.__
-
 # Abstracted UART Control of DY-XXXX mp3 modules
 
 This library abstracts all features described in the manual into a C++ class.
@@ -33,12 +21,12 @@ and [ESP-IDF](#esp-idf), for other boards you will have to
 
 | Model name | Capacity | SD Card support | Amplifier       | Voltage | Tested |
 |:-----------|:---------|:---------------:|:----------------|:-------:|:------:|
-| DY-SV17F   | 32Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | Yes    |
+| DY-SV17F   | 32Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | __Yes__|
 | DY-SV8F    | 64Mbit   | No              | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
 | DY-HV20T   | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
 | DY-HV8F    | 8Mbit    | No              | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
 | DY-HV20T   | NA       | Yes, Max. 32GB  | 10W(8Ω)/20W(4Ω) | 6-35VDC | No     |
-| DY-SV5W    | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | No     |
+| DY-SV5W    | NA       | Yes, Max. 32GB  | 3-5W(4Ω/8Ω)     | 5VDC    | __Yes__|
 
 NOTE: I cannot guarantee that your board will work with the library. Nor that
 a specific feature will work. I only have the `DY-SV17F` in my possession to
@@ -369,7 +357,7 @@ Set the play state to stopped.
 
 #### `void` DY::DYPlayer::previous(..)
 
-Play the preivous file.
+Play the previous file.
 
 
 
@@ -707,6 +695,13 @@ file name. To be sure the sound files play in the expected order:
    named sequentially, sort by name and copy the files, usually they will be
    copied in sequence order.
 
+Please don't file bugs stating there is a bug in the
+[`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) function
+because `00001.MP3` doesn't play when `1` is sent to the module. It's not a bug
+in this library, it's how the module works. If you find that the above
+information is not correct, or if you have suggestions for improvements, please
+do create an issue..
+
 #### By file path
 
 You can also use paths and filenames but neither directory nor filename should
@@ -762,6 +757,7 @@ to implement it, we could discuss merging it with this library for convenience.
   [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) to play
   sound file `00001.MP3` because it's more fault tolerant than by path
   functions.
+
 ### No sound
 
 - Check the speaker connection.
@@ -777,3 +773,9 @@ to implement it, we could discuss merging it with this library for convenience.
   [`DY::DYPlayer::playSpecified`](#dydevice_t-dydyplayerplayspecified) to play
   sound file `00001.MP3` because it's more fault tolerant than by path
   functions.
+
+### Unexpected behaviour
+
+- I asked the module to play `1` but `00001.MP3` is not played, I hear a
+  different sound. This is not a bug in this library, check:
+  [Important: files do not play in order of named sequence](#important-files-do-not-play-in-order-of-named-sequence)
