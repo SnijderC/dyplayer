@@ -13,10 +13,12 @@ namespace DY {
       Stream *port;
       bool isSoftSerial;
       Player();
+#ifdef HAVE_HWSERIAL0
       Player(HardwareSerial* port);
-      #ifdef __AVR__
+#endif
+#ifdef __AVR__
       Player(SoftwareSerial* port);
-      #endif
+#endif
       void begin();
       void serialWrite(uint8_t *buffer, uint8_t len);
       bool serialRead(uint8_t *buffer, uint8_t len);
