@@ -8,27 +8,30 @@
 namespace DY {
   Player::Player() {
     this->port = &Serial;
+    this->isSoftSerial = false;
   }
+#ifdef HAVE_HWSERIAL0
   Player::Player(HardwareSerial* port) {
     this->port = (Stream*)port;
     this->isSoftSerial = false;
   }
-  #ifdef __AVR__
+#endif
+#ifdef __AVR__
   Player::Player(SoftwareSerial* port) {
     this->port = (Stream*)port;
     this->isSoftSerial = true;
   }
-  #endif
+#endif
   void Player::begin() {
-    #ifdef __AVR__
     if (isSoftSerial) {
+#ifdef __AVR__
       ((SoftwareSerial*)port)->begin(9600);
+#endif
     } else {
+#ifdef HAVE_HWSERIAL0
       ((HardwareSerial*)port)->begin(9600);
+#endif
     }
-    #else
-    ((HardwareSerial*)port)->begin(9600);
-    #endif
   }
   void Player::serialWrite(uint8_t *buffer, uint8_t len) {
     port->write(buffer, len);
