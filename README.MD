@@ -564,7 +564,7 @@ active.
 #### `void` DY::DYPlayer::setCycleMode(..)
 
 Sets the cycle mode.
-See [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) for modes
+See [`DY::play_mode_t`](#typedef-enum-class-dyplay_mode_t) for modes
 and meaning.
 
 
