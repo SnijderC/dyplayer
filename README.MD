@@ -685,7 +685,29 @@ Equalize settings.
 
 This enum class is based off uint8_t.
 
+#### typedef enum class DY::play_mode_t
 
+Play modes are basically whatever you commonly find on a media player,
+i.e.:
+Repeat 1, Repeat all, Repeat list (dir), playlist (by dir), random play.
+
+The default is perhaps somewhat unexpected: `DY::PlayMode::OneOff`. Often
+these modules will be used in toys or information displays where you can
+press a button and hear a corresponding sound. To get default media player
+behaviour, you should probably set `DY::PlayMode::Sequence` to just continue
+playing the next song until all are played or skipped, then stop.
+
+
+| const                       | value  | description                                                   |
+| :-------------------------- | :----- | :------------------------------------------------------------ |
+| `DY::PlayMode::Repeat`      | `0x00` | Play all music in sequence, and repeat.                       |
+| `DY::PlayMode::RepeatOne`   | `0x01` | Repeat current sound.                                         |
+| `DY::PlayMode::OneOff`      | `0x02` | Play sound file and stop.                                     |
+| `DY::PlayMode::Random`      | `0x03` | Play random sound file.                                       |
+| `DY::PlayMode::RepeatDir`   | `0x04` | Repeat current directory.                                     |
+| `DY::PlayMode::RandomDir`   | `0x05` | Play random sound file in current folder.                     |
+| `DY::PlayMode::SequenceDir` | `0x06` | Play all sound files in current folder in sequence, and stop. |
+| `DY::PlayMode::Sequence`    | `0x07` | Play all sound files on device in sequence, and stop.         |
 
 ## Loading sound files
 
