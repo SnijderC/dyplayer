@@ -326,7 +326,7 @@ return `0` for sound counts,
 |Cycle times setting               |`0x19`|[`void` __DY::DYPlayer::setCycleTimes__](#void-dydyplayersetcycletimes)|
 |Set EQ                            |`0x1a`|[`void` __DY::DYPlayer::setEq__](#void-dydyplayerseteq)|
 |Combination play setting          |`0x1b`|[`void` __DY::DYPlayer::combinationPlay__](#void-dydyplayercombinationplay) |
-|End Combination play              |`0x1c`|[`void` __DY::DYPlayer::endCombintationPlay__](#void-dydyplayerendcombinationplay)|
+|End Combination play              |`0x1c`|[`void` __DY::DYPlayer::endCombinationPlay__](#void-dydyplayerendcombinationplay)|
 |Select file but do not play       |`0x1f`|[`void` __DY::DYPlayer::select__](#void-dydyplayerselect)|
 
 UART commands are formed by:
