@@ -353,7 +353,7 @@ Check the current play state can, be called at any time.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __return__ | [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) |  | Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t) e.g DY::PlayMode::Stopped, DY::PlayMode::Playing, etc  |
+| __return__ | [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) |  | Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t) e.g DY::PlayState::Stopped, DY::PlayState::Playing, etc  |
 
 
 #### `void` DY::DYPlayer::play(..)
