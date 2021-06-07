@@ -84,7 +84,7 @@ namespace DY {
       }
       j++;
     }
-    sendCommand(_command, _len + 4); // fixed bug where the incorrect len was passed on so paths did not work (fritsjan)
+    sendCommand(_command, _len + 4);
     #ifdef DY_PATHS_IN_HEAP
     delete[] _command;
     #endif
