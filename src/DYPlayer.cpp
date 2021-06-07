@@ -84,7 +84,7 @@ namespace DY {
       }
       j++;
     }
-    sendCommand(_command, len + 4);
+    sendCommand(_command, _len + 4);
     #ifdef DY_PATHS_IN_HEAP
     delete[] _command;
     #endif
