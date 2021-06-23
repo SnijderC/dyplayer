@@ -16,17 +16,13 @@ namespace DY {
     this->isSoftSerial = false;
   }
 #endif
-#ifdef __AVR__
   Player::Player(SoftwareSerial* port) {
     this->port = (Stream*)port;
     this->isSoftSerial = true;
   }
-#endif
   void Player::begin() {
     if (isSoftSerial) {
-#ifdef __AVR__
       ((SoftwareSerial*)port)->begin(9600);
-#endif
     } else {
 #ifdef HAVE_HWSERIAL0
       ((HardwareSerial*)port)->begin(9600);
