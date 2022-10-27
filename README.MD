@@ -712,6 +712,12 @@ the entire communication protocol is different from the UART protocol. So there
 is no particular benefit to adding it to this library. That said, if you plan
 to implement it, we could discuss merging it with this library for convenience.
 
+## Runnning this library on PIC
+
+It's not supported, however there you can find a port
+[here](https://github.com/SnijderC/dyplayer/issues/19) by @DoubleTop12, proving it's possible with
+some effort.
+
 ## Troubleshooting
 
 ### No communication with the board
