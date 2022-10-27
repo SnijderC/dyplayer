@@ -12,29 +12,34 @@ namespace DY
     this->port = &Serial;
     this->isSoftSerial = false;
   }
-#ifdef HAVE_HWSERIAL0
+#ifdef HAS_HARDWARE_SERIAL
   Player::Player(HardwareSerial *port)
   {
     this->port = (Stream *)port;
     this->isSoftSerial = false;
   }
 #endif
+
+#ifdef HAS_SOFTWARE_SERIAL
   Player::Player(SoftwareSerial *port)
   {
     this->port = (Stream *)port;
     this->isSoftSerial = true;
   }
+#endif
   void Player::begin()
   {
     if (isSoftSerial)
     {
+#ifdef HAS_SOFTWARE_SERIAL
       ((SoftwareSerial *)port)->begin(9600);
       while (!((SoftwareSerial *)port))
         ; // wait for port to be connected
+#endif
     }
     else
     {
-#ifdef HAVE_HWSERIAL0
+#ifdef HAS_HARDWARE_SERIAL
       ((HardwareSerial *)port)->begin(9600);
       while (!((HardwareSerial *)port))
         ; // wait for port to be connected
