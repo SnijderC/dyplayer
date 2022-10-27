@@ -324,9 +324,9 @@ return `0` for sound counts,
 |Select specified path to interlude|`0x17`|[`void` __DY::DYPlayer::interludeSpecifiedDevicePath__](#void-dydyplayerinterludespecifieddevicepath)|
 |Cycle mode setting                |`0x18`|[`void` __DY::DYPlayer::setCycleMode__](#void-dydyplayersetcyclemode)|
 |Cycle times setting               |`0x19`|[`void` __DY::DYPlayer::setCycleTimes__](#void-dydyplayersetcycletimes)|
-|Set EQ                            |`0x1a`|[`void` __DY::DYPlayer::SetEq__](#void-dydyplayerseteq)|
+|Set EQ                            |`0x1a`|[`void` __DY::DYPlayer::setEq__](#void-dydyplayerseteq)|
 |Combination play setting          |`0x1b`|[`void` __DY::DYPlayer::combinationPlay__](#void-dydyplayercombinationplay) |
-|End Combination play              |`0x1c`|[`void` __DY::DYPlayer::endCombintationPlay__](#void-dydyplayerendcombinationplay)|
+|End Combination play              |`0x1c`|[`void` __DY::DYPlayer::endCombinationPlay__](#void-dydyplayerendcombinationplay)|
 |Select file but do not play       |`0x1f`|[`void` __DY::DYPlayer::select__](#void-dydyplayerselect)|
 
 UART commands are formed by:
@@ -353,7 +353,7 @@ Check the current play state can, be called at any time.
 
 |           | __Type__ | __Name__ | __Description__  |
 |:----------|:---------|:---------|:-----------------|
-| __return__ | [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) |  | Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t) e.g DY::PlayMode::Stopped, DY::PlayMode::Playing, etc  |
+| __return__ | [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) |  | Play status: A [`DY::PlayState`](#typedef-enum-class-dyplay_state_t) e.g DY::PlayState::Stopped, DY::PlayState::Playing, etc  |
 
 
 #### `void` DY::DYPlayer::play(..)
@@ -564,7 +564,7 @@ active.
 #### `void` DY::DYPlayer::setCycleMode(..)
 
 Sets the cycle mode.
-See [`DY::play_state_t`](#typedef-enum-class-dyplay_state_t) for modes
+See [`DY::play_mode_t`](#typedef-enum-class-dyplay_mode_t) for modes
 and meaning.
 
 
@@ -685,7 +685,29 @@ Equalize settings.
 
 This enum class is based off uint8_t.
 
+#### typedef enum class DY::play_mode_t
 
+Play modes are basically whatever you commonly find on a media player,
+i.e.:
+Repeat 1, Repeat all, Repeat list (dir), playlist (by dir), random play.
+
+The default is perhaps somewhat unexpected: `DY::PlayMode::OneOff`. Often
+these modules will be used in toys or information displays where you can
+press a button and hear a corresponding sound. To get default media player
+behaviour, you should probably set `DY::PlayMode::Sequence` to just continue
+playing the next song until all are played or skipped, then stop.
+
+
+| const                       | value  | description                                                   |
+| :-------------------------- | :----- | :------------------------------------------------------------ |
+| `DY::PlayMode::Repeat`      | `0x00` | Play all music in sequence, and repeat.                       |
+| `DY::PlayMode::RepeatOne`   | `0x01` | Repeat current sound.                                         |
+| `DY::PlayMode::OneOff`      | `0x02` | Play sound file and stop.                                     |
+| `DY::PlayMode::Random`      | `0x03` | Play random sound file.                                       |
+| `DY::PlayMode::RepeatDir`   | `0x04` | Repeat current directory.                                     |
+| `DY::PlayMode::RandomDir`   | `0x05` | Play random sound file in current folder.                     |
+| `DY::PlayMode::SequenceDir` | `0x06` | Play all sound files in current folder in sequence, and stop. |
+| `DY::PlayMode::Sequence`    | `0x07` | Play all sound files on device in sequence, and stop.         |
 
 ## Loading sound files
 

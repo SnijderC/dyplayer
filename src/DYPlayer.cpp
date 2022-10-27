@@ -84,7 +84,7 @@ namespace DY {
       }
       j++;
     }
-    sendCommand(_command, len + 4);
+    sendCommand(_command, _len + 4);
     #ifdef DY_PATHS_IN_HEAP
     delete[] _command;
     #endif
@@ -93,8 +93,8 @@ namespace DY {
   play_state_t DYPlayer::checkPlayState() {
     uint8_t command[3] = { 0xaa, 0x01, 0x00 };
     sendCommand(command, 3, 0xab);
-    uint8_t buffer[6];
-    if (getResponse(buffer, 6)) {
+    uint8_t buffer[5];
+    if (getResponse(buffer, 5)) {
       return (play_state_t) buffer[3];
     }
     return PlayState::Fail;
