@@ -29,11 +29,15 @@ namespace DY
     if (isSoftSerial)
     {
       ((SoftwareSerial *)port)->begin(9600);
+      while (!((SoftwareSerial *)port))
+        ; // wait for port to be connected
     }
     else
     {
 #ifdef HAVE_HWSERIAL0
       ((HardwareSerial *)port)->begin(9600);
+      while (!((HardwareSerial *)port))
+        ; // wait for port to be connected
 #endif
     }
   }
