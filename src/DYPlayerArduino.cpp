@@ -5,36 +5,47 @@
 #ifdef ARDUINO
 #include "DYPlayerArduino.h"
 
-namespace DY {
-  Player::Player() {
+namespace DY
+{
+  Player::Player()
+  {
     this->port = &Serial;
     this->isSoftSerial = false;
   }
 #ifdef HAVE_HWSERIAL0
-  Player::Player(HardwareSerial* port) {
-    this->port = (Stream*)port;
+  Player::Player(HardwareSerial *port)
+  {
+    this->port = (Stream *)port;
     this->isSoftSerial = false;
   }
 #endif
-  Player::Player(SoftwareSerial* port) {
-    this->port = (Stream*)port;
+  Player::Player(SoftwareSerial *port)
+  {
+    this->port = (Stream *)port;
     this->isSoftSerial = true;
   }
-  void Player::begin() {
-    if (isSoftSerial) {
-      ((SoftwareSerial*)port)->begin(9600);
-    } else {
+  void Player::begin()
+  {
+    if (isSoftSerial)
+    {
+      ((SoftwareSerial *)port)->begin(9600);
+    }
+    else
+    {
 #ifdef HAVE_HWSERIAL0
-      ((HardwareSerial*)port)->begin(9600);
+      ((HardwareSerial *)port)->begin(9600);
 #endif
     }
   }
-  void Player::serialWrite(uint8_t *buffer, uint8_t len) {
+  void Player::serialWrite(uint8_t *buffer, uint8_t len)
+  {
     port->write(buffer, len);
   }
-  bool Player::serialRead(uint8_t *buffer, uint8_t len) {
+  bool Player::serialRead(uint8_t *buffer, uint8_t len)
+  {
     // Serial.setTimeout(1000); // Default timeout 1000ms.
-    if(port->readBytes(buffer, len) > 0) {
+    if (port->readBytes(buffer, len) > 0)
+    {
       return true;
     }
     return false;
