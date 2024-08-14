@@ -1,3 +1,6 @@
+#ifndef DYPLAYERARDUINO_H
+#define DYPLAYERARDUINO_H
+
 #ifdef ARDUINO
 #include <Arduino.h>
 #include "DYPlayer.h"
@@ -39,4 +42,6 @@ namespace DY
     bool serialRead(uint8_t *buffer, uint8_t len);
   };
 }
+#endif
+
 #endif

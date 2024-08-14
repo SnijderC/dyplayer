@@ -8,6 +8,9 @@
  */
 #include <stdint.h>
 
+#ifndef DYPLAYER_H
+#define DYPLAYER_H
+
 #ifndef DY_PATHS_IN_HEAP
 #define DY_PATH_LEN 40
 #endif
@@ -386,3 +389,5 @@ namespace DY
     void byPathCommand(uint8_t command, device_t device, char *path);
   };
 }
+
+#endif

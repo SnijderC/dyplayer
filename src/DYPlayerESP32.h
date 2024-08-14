@@ -1,3 +1,6 @@
+#ifndef DYPLAYERESP32_H
+#define DYPLAYERESP32_H
+
 #ifdef ESP_PLATFORM
 #include "driver/uart.h"
 #include "DYPlayer.h"
@@ -12,4 +15,6 @@ namespace DY
     uart_port_t uart_num;
   };
 }
+#endif
+
 #endif
