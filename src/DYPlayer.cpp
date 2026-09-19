@@ -261,7 +261,7 @@ namespace DY
 
   void DYPlayer::interludeSpecified(device_t device, uint16_t number)
   {
-    uint8_t command[6] = {0xaa, 0x0b, 0x03, 0x00, 0x00, 0x00};
+    uint8_t command[6] = {0xaa, 0x16, 0x03, 0x00, 0x00, 0x00};
     command[3] = (uint8_t)device;
     command[4] = number >> 8;
     command[5] = number & 0xff;
